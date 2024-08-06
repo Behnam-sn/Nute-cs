@@ -27,9 +27,9 @@ public class PlaylistManagementService
         return result;
     }
 
-    public ComparePlaylistsResult Execute(ComparePlaylistsCommand command)
+    public ComparePlaylistsResultVm Execute(ComparePlaylistsCommand command)
     {
-        var result = new ComparePlaylistsResult();
+        var result = new ComparePlaylistsResultVm();
         // only in playlist 1
         // only in playlist 2
         // in both
