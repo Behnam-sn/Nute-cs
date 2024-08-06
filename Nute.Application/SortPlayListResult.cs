@@ -1,5 +1,3 @@
 namespace Nute.Application;
 
-public record SortPlayListResult
-{
-}
+public record SortPlayListResultVm();

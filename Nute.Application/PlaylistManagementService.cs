@@ -36,9 +36,9 @@ public class PlaylistManagementService
         return result;
     }
 
-    public SortPlayListResult Execute(SortPlayListCommand command)
+    public SortPlayListResultVm Execute(SortPlayListCommand command)
     {
-        var result = new SortPlayListResult();
+        var result = new SortPlayListResultVm();
         return result;
     }
 }
