@@ -27,7 +27,7 @@ public class PlaylistManagementService
         return result;
     }
 
-    public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPat2)
+    public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
     {
         var result = new ComparePlaylistsResultVm();
         // only in playlist 1
