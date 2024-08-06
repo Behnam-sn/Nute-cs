@@ -2,6 +2,15 @@ namespace Nute.Application;
 
 public class PlaylistManagementService
 {
+    public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
+    {
+        var result = new ComparePlaylistsResultVm();
+        // only in playlist 1
+        // only in playlist 2
+        // in both
+        return result;
+    }
+
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
         var result = new RemoveDuplicateSongsInPlaylistResultVm();
@@ -24,15 +33,6 @@ public class PlaylistManagementService
         // return them 
         // show them
 
-        return result;
-    }
-
-    public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
-    {
-        var result = new ComparePlaylistsResultVm();
-        // only in playlist 1
-        // only in playlist 2
-        // in both
         return result;
     }
 
