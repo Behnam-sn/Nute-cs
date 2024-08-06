@@ -18,7 +18,7 @@ public class PlaylistProcessor
         return new RemoveDuplicateSongsInPlaylistResult(songs, duplicateSongs);
     }
 
-    public static IEnumerable<string> FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
+    public static FindNonExistentSongsInPlaylistResult FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
     {
         var nonExistentSongs = new List<string>();
 
@@ -30,7 +30,7 @@ public class PlaylistProcessor
             }
         }
 
-        return nonExistentSongs;
+        return new FindNonExistentSongsInPlaylistResult(nonExistentSongs);
     }
 
     public static ComparePlaylistsResult ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
