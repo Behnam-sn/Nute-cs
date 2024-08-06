@@ -4,16 +4,14 @@ public class PlaylistManagementService
 {
     public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
     {
-        var result = new ComparePlaylistsResultVm();
         // only in playlist 1
         // only in playlist 2
         // in both
-        return result;
+        return new ComparePlaylistsResultVm();
     }
 
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
-        var result = new RemoveDuplicateSongsInPlaylistResultVm();
         // open playlist file
         // read each song
         // add each song to a hashset
@@ -21,24 +19,21 @@ public class PlaylistManagementService
         // keep the duplicates
         // return them
         // update the playlist file
-        return result;
+        return new RemoveDuplicateSongsInPlaylistResultVm();
     }
 
     public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
     {
-        var result = new FindNonExistentSongsInPlaylistResultVm();
         // open playlist file
         // turn song into a list
         // find non existent song
         // return them 
         // show them
-
-        return result;
+        return new FindNonExistentSongsInPlaylistResultVm();
     }
 
     public static SortPlayListResultVm SortPlayList(string playlistPath)
     {
-        var result = new SortPlayListResultVm();
-        return result;
+        return new SortPlayListResultVm();
     }
 }
