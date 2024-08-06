@@ -2,7 +2,7 @@ namespace Nute.Domain;
 
 public class PlaylistProcessor
 {
-    public PlaylistProcessorRemoveDuplicateSongsInPlaylistResult RemoveDuplicateSongsInPlaylist(IEnumerable<string> playlist)
+    public static PlaylistProcessorRemoveDuplicateSongsInPlaylistResult RemoveDuplicateSongsInPlaylist(IEnumerable<string> playlist)
     {
         var songs = new HashSet<string>();
         var duplicateSongs = new List<string>();
@@ -18,7 +18,7 @@ public class PlaylistProcessor
         return new PlaylistProcessorRemoveDuplicateSongsInPlaylistResult(songs, duplicateSongs);
     }
 
-    public IEnumerable<string> FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
+    public static IEnumerable<string> FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
     {
         var nonExistentSongs = new List<string>();
 
@@ -33,7 +33,7 @@ public class PlaylistProcessor
         return nonExistentSongs;
     }
 
-    public PlaylistProcessorComparePlaylistsResult ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
+    public static PlaylistProcessorComparePlaylistsResult ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
     {
         var inCommonSongs = new List<string>();
 
