@@ -2,7 +2,7 @@ namespace Nute.Domain;
 
 public class PlaylistProcessor
 {
-    public static ComparePlaylistsResult ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
+    public static ComparePlaylistsResultDto ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
     {
         var inCommonSongs = new List<string>();
 
@@ -20,10 +20,10 @@ public class PlaylistProcessor
         var playlist2Songs = playlist2.ToList();
         playlist2Songs.RemoveAll(i => inCommonSongs.Contains(i));
 
-        return new ComparePlaylistsResult(playlist1Songs, playlist2Songs, inCommonSongs);
+        return new ComparePlaylistsResultDto(playlist1Songs, playlist2Songs, inCommonSongs);
     }
 
-    public static RemoveDuplicateSongsInPlaylistResult RemoveDuplicateSongsInPlaylist(IEnumerable<string> playlist)
+    public static RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongsInPlaylist(IEnumerable<string> playlist)
     {
         var songs = new HashSet<string>();
         var duplicateSongs = new List<string>();
@@ -36,10 +36,10 @@ public class PlaylistProcessor
             }
         }
 
-        return new RemoveDuplicateSongsInPlaylistResult(songs, duplicateSongs);
+        return new RemoveDuplicateSongsInPlaylistResultDto(songs, duplicateSongs);
     }
 
-    public static FindNonExistentSongsInPlaylistResult FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
+    public static FindNonExistentSongsInPlaylistResultDto FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
     {
         var nonExistentSongs = new List<string>();
 
@@ -51,6 +51,6 @@ public class PlaylistProcessor
             }
         }
 
-        return new FindNonExistentSongsInPlaylistResult(nonExistentSongs);
+        return new FindNonExistentSongsInPlaylistResultDto(nonExistentSongs);
     }
 }
