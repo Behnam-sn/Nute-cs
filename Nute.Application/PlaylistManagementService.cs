@@ -2,7 +2,7 @@ namespace Nute.Application;
 
 public class PlaylistManagementService
 {
-    public RemoveDuplicateSongsInPlaylistResultVm Execute(RemoveDuplicateSongsInPlaylistCommand command)
+    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
         var result = new RemoveDuplicateSongsInPlaylistResultVm();
         // open playlist file
@@ -15,7 +15,7 @@ public class PlaylistManagementService
         return result;
     }
 
-    public FindNonExistentSongsInPlaylistResultVm Execute(FindNonExistentSongsInPlaylistCommand command)
+    public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
     {
         var result = new FindNonExistentSongsInPlaylistResultVm();
         // open playlist file
@@ -27,7 +27,7 @@ public class PlaylistManagementService
         return result;
     }
 
-    public ComparePlaylistsResultVm Execute(ComparePlaylistsCommand command)
+    public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPat2)
     {
         var result = new ComparePlaylistsResultVm();
         // only in playlist 1
@@ -36,7 +36,7 @@ public class PlaylistManagementService
         return result;
     }
 
-    public SortPlayListResultVm Execute(SortPlayListCommand command)
+    public static SortPlayListResultVm SortPlayList(string playlistPath)
     {
         var result = new SortPlayListResultVm();
         return result;
