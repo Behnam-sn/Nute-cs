@@ -2,9 +2,9 @@ namespace Nute.Application;
 
 public class PlaylistManagementService
 {
-    public RemoveDuplicateSongsInPlaylistResult Execute(RemoveDuplicateSongsInPlaylistCommand command)
+    public RemoveDuplicateSongsInPlaylistResultVm Execute(RemoveDuplicateSongsInPlaylistCommand command)
     {
-        var result = new RemoveDuplicateSongsInPlaylistResult();
+        var result = new RemoveDuplicateSongsInPlaylistResultVm();
         // open playlist file
         // read each song
         // add each song to a hashset
