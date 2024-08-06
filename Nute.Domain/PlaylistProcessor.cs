@@ -33,7 +33,7 @@ public class PlaylistProcessor
         return nonExistentSongs;
     }
 
-    public static PlaylistProcessorComparePlaylistsResult ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
+    public static ComparePlaylistsResult ComparePlaylists(IEnumerable<string> playlist1, IEnumerable<string> playlist2)
     {
         var inCommonSongs = new List<string>();
 
@@ -51,6 +51,6 @@ public class PlaylistProcessor
         var playlist2Songs = playlist2.ToList();
         playlist2Songs.RemoveAll(i => inCommonSongs.Contains(i));
 
-        return new PlaylistProcessorComparePlaylistsResult(playlist1Songs, playlist2Songs, inCommonSongs);
+        return new ComparePlaylistsResult(playlist1Songs, playlist2Songs, inCommonSongs);
     }
 }
