@@ -15,9 +15,9 @@ public class PlaylistManagementService
         return result;
     }
 
-    public FindNonExistentSongsInPlaylistResult Execute(FindNonExistentSongsInPlaylistCommand command)
+    public FindNonExistentSongsInPlaylistResultVm Execute(FindNonExistentSongsInPlaylistCommand command)
     {
-        var result = new FindNonExistentSongsInPlaylistResult();
+        var result = new FindNonExistentSongsInPlaylistResultVm();
         // open playlist file
         // turn song into a list
         // find non existent song
