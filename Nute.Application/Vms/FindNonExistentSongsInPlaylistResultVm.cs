@@ -1,3 +1,3 @@
-namespace Nute.Application;
+namespace Nute.Application.Vms;
 
 public record FindNonExistentSongsInPlaylistResultVm();
