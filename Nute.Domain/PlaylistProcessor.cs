@@ -1,3 +1,5 @@
+using Nute.Domain.Dtos;
+
 namespace Nute.Domain;
 
 public class PlaylistProcessor
