@@ -17,4 +17,19 @@ public class PlaylistProcessor
 
         return new PlaylistProcessorRemoveDuplicateSongsInPlaylistResult(songs, duplicateSongs);
     }
+
+    public IEnumerable<string> FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
+    {
+        var nonExistentSongs = new List<string>();
+
+        foreach (var song in playlist)
+        {
+            if (!File.Exists(song))
+            {
+                nonExistentSongs.Add(song);
+            }
+        }
+
+        return nonExistentSongs;
+    }
 }
