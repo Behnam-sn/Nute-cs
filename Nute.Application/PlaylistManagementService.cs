@@ -34,9 +34,9 @@ public class PlaylistManagementService
         return new FindNonExistentSongsInPlaylistResultVm();
     }
 
-    public static SortPlayListResultVm SortPlaylist(string playlistPath)
+    public static SortPlaylistResultVm SortPlaylist(string playlistPath)
     {
-        return new SortPlayListResultVm();
+        return new SortPlaylistResultVm();
     }
 
     public static void AdaptPlaylistForAndroid(string playlistPath)

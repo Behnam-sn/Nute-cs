@@ -1,3 +1,3 @@
 namespace Nute.Application.Vms;
 
-public record SortPlayListResultVm();
+public record SortPlaylistResultVm();
