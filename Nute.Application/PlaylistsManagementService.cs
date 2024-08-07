@@ -2,7 +2,7 @@ using Nute.Application.Vms;
 
 namespace Nute.Application;
 
-public class PlaylistManagementService
+public class PlaylistsManagementService
 {
     public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
     {
