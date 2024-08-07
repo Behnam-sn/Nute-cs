@@ -10,6 +10,11 @@ public class PlaylistProcessor
 
         foreach (var song in playlist1)
         {
+            if (song is "\n")
+            {
+                continue;
+            }
+
             if (playlist2.Contains(song))
             {
                 inCommonSongs.Add(song);
@@ -25,7 +30,7 @@ public class PlaylistProcessor
         return new ComparePlaylistsResultDto(playlist1Songs, playlist2Songs, inCommonSongs);
     }
 
-    public static RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongsInPlaylist(IEnumerable<string> playlist)
+    public static FindDuplicateSongsInPlaylistResultDto FindDuplicateSongsInPlaylist(IEnumerable<string> playlist)
     {
         var songs = new HashSet<string>();
         var duplicateSongs = new List<string>();
@@ -38,7 +43,7 @@ public class PlaylistProcessor
             }
         }
 
-        return new RemoveDuplicateSongsInPlaylistResultDto(songs, duplicateSongs);
+        return new FindDuplicateSongsInPlaylistResultDto(songs, duplicateSongs);
     }
 
     public static FindNonExistentSongsInPlaylistResultDto FindNonExistentSongsInPlaylist(IEnumerable<string> playlist)
