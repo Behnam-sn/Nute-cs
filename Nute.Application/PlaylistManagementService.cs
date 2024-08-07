@@ -34,7 +34,7 @@ public class PlaylistManagementService
         return new FindNonExistentSongsInPlaylistResultVm();
     }
 
-    public static SortPlayListResultVm SortPlayList(string playlistPath)
+    public static SortPlayListResultVm SortPlaylist(string playlistPath)
     {
         return new SortPlayListResultVm();
     }
