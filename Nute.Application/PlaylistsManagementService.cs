@@ -7,45 +7,37 @@ public class PlaylistsManagementService
 {
     public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
     {
-        ValidatePlaylist(playlistPath: playlistPath1);
-        ValidatePlaylist(playlistPath: playlistPath2);
-
-        var playlist1 = File.ReadAllLines(playlistPath1);
-        var playlist2 = File.ReadAllLines(playlistPath2);
-        var result = PlaylistProcessor.ComparePlaylists(
-            playlist1: playlist1[3..],
-            playlist2: playlist2[3..]);
+        var playlist1 = new Playlist(path: playlistPath1);
+        var playlist2 = new Playlist(path: playlistPath2);
+        var result = playlist1.CompareTo(playlist2);
 
         return new ComparePlaylistsResultVm(
-            Playlist1Title: GetPlaylistTitle(playlist1),
+            Playlist1Title: playlist1.Title,
             Playlist1Songs: result.Playlist1Songs,
-            Playlist2Title: GetPlaylistTitle(playlist2),
+            Playlist2Title: playlist2.Title,
             Playlist2Songs: result.Playlist2Songs,
             InCommonSongs: result.InCommonSongs);
     }
 
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
-        ValidatePlaylist(playlistPath: playlistPath);
-
-        var playlist = File.ReadAllLines(playlistPath);
-        var result = PlaylistProcessor.FindDuplicateSongsInPlaylist(playlist: playlist[3..]);
-        var newPlaylist = playlist[..2].Concat(result.Songs);
-        File.WriteAllLines(playlistPath, newPlaylist);
+        var playlist = new Playlist(path: playlistPath);
+        var result = playlist.RemoveDuplicateSongsInPlaylist();
+        playlist.SavePlaylist();
 
         return new RemoveDuplicateSongsInPlaylistResultVm(
-            PlaylistTitle: GetPlaylistTitle(playlist),
+            PlaylistTitle: playlist.Title,
             DuplicateSongs: result.DuplicateSongs);
     }
 
     public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
     {
-        // open playlist file
-        // turn song into a list
-        // find non existent song
-        // return them 
-        // show them
-        return new FindNonExistentSongsInPlaylistResultVm();
+        var playlist = new Playlist(path: playlistPath);
+        var result = playlist.FindNonExistentSongsInPlaylist();
+
+        return new FindNonExistentSongsInPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            NonExistentSongs: result.NonExistentSongs);
     }
 
     public static SortPlaylistResultVm SortPlaylist(string playlistPath)
@@ -56,18 +48,5 @@ public class PlaylistsManagementService
     public static void AdaptPlaylistForAndroid(string playlistPath)
     {
 
-    }
-
-    private static void ValidatePlaylist(string playlistPath)
-    {
-        if (Path.GetExtension(playlistPath) is not "m3u8")
-        {
-            throw new Exception("Not a Acceptable Playlist Type");
-        }
-    }
-
-    private static string GetPlaylistTitle(string[] playlist)
-    {
-        return playlist[2];
     }
 }
