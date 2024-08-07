@@ -1,4 +1,5 @@
 using Nute.Application.Vms;
+using Nute.Domain;
 
 namespace Nute.Application;
 
@@ -6,22 +7,35 @@ public class PlaylistsManagementService
 {
     public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
     {
-        // only in playlist 1
-        // only in playlist 2
-        // in both
-        return new ComparePlaylistsResultVm();
+        ValidatePlaylist(playlistPath: playlistPath1);
+        ValidatePlaylist(playlistPath: playlistPath2);
+
+        var playlist1 = File.ReadAllLines(playlistPath1);
+        var playlist2 = File.ReadAllLines(playlistPath2);
+        var result = PlaylistProcessor.ComparePlaylists(
+            playlist1: playlist1[3..],
+            playlist2: playlist2[3..]);
+
+        return new ComparePlaylistsResultVm(
+            Playlist1Title: GetPlaylistTitle(playlist1),
+            Playlist1Songs: result.Playlist1Songs,
+            Playlist2Title: GetPlaylistTitle(playlist2),
+            Playlist2Songs: result.Playlist2Songs,
+            InCommonSongs: result.InCommonSongs);
     }
 
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
-        // open playlist file
-        // read each song
-        // add each song to a hashset
-        // return the hashset
-        // keep the duplicates
-        // return them
-        // update the playlist file
-        return new RemoveDuplicateSongsInPlaylistResultVm();
+        ValidatePlaylist(playlistPath: playlistPath);
+
+        var playlist = File.ReadAllLines(playlistPath);
+        var result = PlaylistProcessor.FindDuplicateSongsInPlaylist(playlist: playlist[3..]);
+        var newPlaylist = playlist[..2].Concat(result.Songs);
+        File.WriteAllLines(playlistPath, newPlaylist);
+
+        return new RemoveDuplicateSongsInPlaylistResultVm(
+            PlaylistTitle: GetPlaylistTitle(playlist),
+            DuplicateSongs: result.DuplicateSongs);
     }
 
     public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
@@ -42,5 +56,18 @@ public class PlaylistsManagementService
     public static void AdaptPlaylistForAndroid(string playlistPath)
     {
 
+    }
+
+    private static void ValidatePlaylist(string playlistPath)
+    {
+        if (Path.GetExtension(playlistPath) is not "m3u8")
+        {
+            throw new Exception("Not a Acceptable Playlist Type");
+        }
+    }
+
+    private static string GetPlaylistTitle(string[] playlist)
+    {
+        return playlist[2];
     }
 }
