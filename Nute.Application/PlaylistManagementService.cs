@@ -38,4 +38,9 @@ public class PlaylistManagementService
     {
         return new SortPlayListResultVm();
     }
+
+    public static void AdaptPlaylistForAndroid(string playlistPath)
+    {
+
+    }
 }
