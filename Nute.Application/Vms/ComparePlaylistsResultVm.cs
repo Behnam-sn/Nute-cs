@@ -1,3 +1,8 @@
 namespace Nute.Application.Vms;
 
-public record ComparePlaylistsResultVm();
+public record ComparePlaylistsResultVm(
+    string Playlist1Title,
+    IEnumerable<string> Playlist1Songs,
+    string Playlist2Title,
+    IEnumerable<string> Playlist2Songs,
+    IEnumerable<string> InCommonSongs);
