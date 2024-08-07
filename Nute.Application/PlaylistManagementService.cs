@@ -1,3 +1,5 @@
+using Nute.Application.Vms;
+
 namespace Nute.Application;
 
 public class PlaylistManagementService
