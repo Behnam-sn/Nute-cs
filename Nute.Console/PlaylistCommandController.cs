@@ -57,25 +57,7 @@ public class PlaylistCommandController
                 playlistPath1: playlist1Path,
                 playlistPath2: playlist2Path);
 
-            System.Console.WriteLine($"Playlist 1 Title: {result.Playlist1Title}");
-            System.Console.WriteLine("Playlist 1 Unique Songs:");
-            foreach (var song in result.Playlist1Songs)
-            {
-                System.Console.WriteLine(song);
-            }
-            System.Console.WriteLine("");
-            System.Console.WriteLine($"Playlist 2 Title: {result.Playlist2Title}");
-            System.Console.WriteLine("Playlist 2 Unique Songs:");
-            foreach (var song in result.Playlist2Songs)
-            {
-                System.Console.WriteLine(song);
-            }
-            System.Console.WriteLine("");
-            System.Console.WriteLine("In Common Songs: ");
-            foreach (var song in result.InCommonSongs)
-            {
-                System.Console.WriteLine(song);
-            }
+            result.ShowInConsole();
         }
         catch (Exception exception)
         {
