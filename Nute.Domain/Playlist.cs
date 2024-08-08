@@ -19,7 +19,7 @@ public class Playlist
         Songs = ExtractPlayListSongs(playlistAllLines);
     }
 
-    public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongsInPlaylist()
+    public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
     {
         var uniqueSongs = new HashSet<string>();
         var duplicateSongs = new List<string>();
@@ -39,7 +39,7 @@ public class Playlist
             DuplicateSongs: duplicateSongs);
     }
 
-    public FindNonExistentSongsInPlaylistResultDto FindNonExistentSongsInPlaylist()
+    public FindNonExistentSongsInPlaylistResultDto FindNonExistentSongs()
     {
         var nonExistentSongs = new List<string>();
 
@@ -84,7 +84,7 @@ public class Playlist
             InCommonSongs: inCommonSongs);
     }
 
-    public void SavePlaylist()
+    public void Save()
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.Append("");

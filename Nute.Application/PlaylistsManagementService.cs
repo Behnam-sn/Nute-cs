@@ -5,6 +5,27 @@ namespace Nute.Application;
 
 public class PlaylistsManagementService
 {
+    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
+    {
+        var playlist = new Playlist(path: playlistPath);
+        var result = playlist.RemoveDuplicateSongs();
+        playlist.Save();
+
+        return new RemoveDuplicateSongsInPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            DuplicateSongs: result.DuplicateSongs);
+    }
+
+    public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
+    {
+        var playlist = new Playlist(path: playlistPath);
+        var result = playlist.FindNonExistentSongs();
+
+        return new FindNonExistentSongsInPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            NonExistentSongs: result.NonExistentSongs);
+    }
+
     public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
     {
         var playlist1 = new Playlist(path: playlistPath1);
@@ -17,27 +38,6 @@ public class PlaylistsManagementService
             Playlist2Title: playlist2.Title,
             Playlist2Songs: result.Playlist2Songs,
             InCommonSongs: result.InCommonSongs);
-    }
-
-    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
-    {
-        var playlist = new Playlist(path: playlistPath);
-        var result = playlist.RemoveDuplicateSongsInPlaylist();
-        playlist.SavePlaylist();
-
-        return new RemoveDuplicateSongsInPlaylistResultVm(
-            PlaylistTitle: playlist.Title,
-            DuplicateSongs: result.DuplicateSongs);
-    }
-
-    public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
-    {
-        var playlist = new Playlist(path: playlistPath);
-        var result = playlist.FindNonExistentSongsInPlaylist();
-
-        return new FindNonExistentSongsInPlaylistResultVm(
-            PlaylistTitle: playlist.Title,
-            NonExistentSongs: result.NonExistentSongs);
     }
 
     public static SortPlaylistResultVm SortPlaylist(string playlistPath)
