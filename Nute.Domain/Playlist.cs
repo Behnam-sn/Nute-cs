@@ -11,14 +11,11 @@ public class Playlist
     public string Title { get; }
     public IEnumerable<string> Songs { get; private set; }
 
-    public Playlist(string path)
+    public Playlist(string path, string title, IEnumerable<string> songs)
     {
-        ValidatePlaylist(path);
-
         Path = path;
-        var allLinesOfPlaylist = File.ReadAllLines(path);
-        Title = ExtractPlaylistTitle(allLinesOfPlaylist);
-        Songs = ExtractPlayListSongs(allLinesOfPlaylist);
+        Title = title;
+        Songs = songs;
     }
 
     public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
@@ -88,6 +85,20 @@ public class Playlist
         stringBuilder.Append($"#{Title}{PLAYLIST_TYPE}");
         stringBuilder.Append(Songs);
         File.WriteAllText(Path, stringBuilder.ToString());
+    }
+
+    public static Playlist Parse(string path)
+    {
+        ValidatePlaylist(path);
+
+        var allLinesOfPlaylist = File.ReadAllLines(path);
+        var title = ExtractPlaylistTitle(allLinesOfPlaylist);
+        var songs = ExtractPlayListSongs(allLinesOfPlaylist);
+        return new Playlist(
+            path: path,
+            title: title,
+            songs: songs
+        );
     }
 
     private static void ValidatePlaylist(string playlistPath)
