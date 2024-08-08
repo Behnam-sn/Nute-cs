@@ -91,9 +91,9 @@ public class Playlist
     {
         ValidatePlaylist(path);
 
-        var allLinesOfPlaylist = File.ReadAllLines(path);
-        var title = ExtractPlaylistTitle(allLinesOfPlaylist);
-        var songs = ExtractPlayListSongs(allLinesOfPlaylist);
+        var playlistLines = File.ReadAllLines(path);
+        var title = ExtractPlaylistTitle(playlistLines);
+        var songs = ExtractPlayListSongs(playlistLines);
         return new Playlist(
             path: path,
             title: title,
@@ -110,15 +110,15 @@ public class Playlist
         }
     }
 
-    private static string ExtractPlaylistTitle(string[] playlistAllLines)
+    private static string ExtractPlaylistTitle(string[] playlistLines)
     {
-        var titleLine = playlistAllLines[1];
+        var titleLine = playlistLines[1];
         var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
         return titleLine[1..lastIndexOfTag];
     }
 
-    private static string[] ExtractPlayListSongs(string[] playlistAllLines)
+    private static string[] ExtractPlayListSongs(string[] playlistLines)
     {
-        return playlistAllLines[2..];
+        return playlistLines[2..];
     }
 }
