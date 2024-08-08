@@ -5,6 +5,8 @@ namespace Nute.Domain;
 
 public class Playlist
 {
+    private const string PLAYLIST_TYPE = ".m3u8";
+
     public string Path { get; }
     public string Title { get; }
     public IEnumerable<string> Songs { get; private set; }
@@ -83,14 +85,15 @@ public class Playlist
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.Append("");
-        stringBuilder.Append($"#{Title}.m8u3");
+        stringBuilder.Append($"#{Title}{PLAYLIST_TYPE}");
         stringBuilder.Append(Songs);
         File.WriteAllText(Path, stringBuilder.ToString());
     }
 
     private static void ValidatePlaylist(string playlistPath)
     {
-        if (System.IO.Path.GetExtension(playlistPath) is not "m3u8")
+        var fileExtension = System.IO.Path.GetExtension(playlistPath);
+        if (fileExtension is not PLAYLIST_TYPE)
         {
             throw new Exception("Not a Acceptable Playlist Type");
         }
@@ -99,7 +102,7 @@ public class Playlist
     private static string ExtractPlaylistTitle(string[] playlistAllLines)
     {
         var titleLine = playlistAllLines[1];
-        var lastIndexOfTag = titleLine.LastIndexOf(".m8u3");
+        var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
         return titleLine[1..lastIndexOfTag];
     }
 
