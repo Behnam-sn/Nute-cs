@@ -34,9 +34,9 @@ public class PlaylistsManagementService
 
         return new ComparePlaylistsResultVm(
             Playlist1Title: playlist1.Title,
-            Playlist1Songs: result.Playlist1Songs,
+            Playlist1Songs: result.Playlist1UniqueSongs,
             Playlist2Title: playlist2.Title,
-            Playlist2Songs: result.Playlist2Songs,
+            Playlist2Songs: result.Playlist2UniqueSongs,
             InCommonSongs: result.InCommonSongs);
     }
 
