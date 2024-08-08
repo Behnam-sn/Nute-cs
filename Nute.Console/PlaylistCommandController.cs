@@ -54,8 +54,8 @@ public class PlaylistCommandController
         try
         {
             var result = PlaylistsManagementService.ComparePlaylists(
-                playlistPath1: playlist1Path,
-                playlistPath2: playlist2Path);
+                playlist1Path: playlist1Path,
+                playlist2Path: playlist2Path);
 
             result.ShowInConsole();
         }

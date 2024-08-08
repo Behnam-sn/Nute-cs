@@ -26,10 +26,10 @@ public class PlaylistsManagementService
             NonExistentSongs: result.NonExistentSongs);
     }
 
-    public static ComparePlaylistsResultVm ComparePlaylists(string playlistPath1, string playlistPath2)
+    public static ComparePlaylistsResultVm ComparePlaylists(string playlist1Path, string playlist2Path)
     {
-        var playlist1 = Playlist.Parse(path: playlistPath1);
-        var playlist2 = Playlist.Parse(path: playlistPath2);
+        var playlist1 = Playlist.Parse(path: playlist1Path);
+        var playlist2 = Playlist.Parse(path: playlist2Path);
         var result = playlist1.CompareTo(playlist2);
 
         return new ComparePlaylistsResultVm(
