@@ -13,10 +13,10 @@ public class Playlist
     {
         ValidatePlaylist(path);
 
-        var playlistAllLines = File.ReadAllLines(path);
         Path = path;
-        Title = ExtractPlaylistTitle(playlistAllLines);
-        Songs = ExtractPlayListSongs(playlistAllLines);
+        var allLinesOfPlaylist = File.ReadAllLines(path);
+        Title = ExtractPlaylistTitle(allLinesOfPlaylist);
+        Songs = ExtractPlayListSongs(allLinesOfPlaylist);
     }
 
     public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
@@ -55,32 +55,27 @@ public class Playlist
             NonExistentSongs: nonExistentSongs);
     }
 
-    public ComparePlaylistsResultDto CompareTo(Playlist playlist)
+    public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
     {
         var inCommonSongs = new List<string>();
 
         foreach (var song in Songs)
         {
-            if (song is "\n")
-            {
-                continue;
-            }
-
-            if (playlist.Songs.Contains(song))
+            if (otherPlaylist.Songs.Contains(song))
             {
                 inCommonSongs.Add(song);
             }
         }
 
-        var playlist1Songs = Songs.ToList();
-        playlist1Songs.RemoveAll(i => inCommonSongs.Contains(i));
+        var playlist1UniqueSongs = Songs.ToList();
+        playlist1UniqueSongs.RemoveAll(i => inCommonSongs.Contains(i));
 
-        var playlist2Songs = playlist.Songs.ToList();
-        playlist2Songs.RemoveAll(i => inCommonSongs.Contains(i));
+        var playlist2UniqueSongs = otherPlaylist.Songs.ToList();
+        playlist2UniqueSongs.RemoveAll(i => inCommonSongs.Contains(i));
 
         return new ComparePlaylistsResultDto(
-            Playlist1Songs: playlist1Songs,
-            Playlist2Songs: playlist2Songs,
+            Playlist1UniqueSongs: playlist1UniqueSongs,
+            Playlist2UniqueSongs: playlist2UniqueSongs,
             InCommonSongs: inCommonSongs);
     }
 
