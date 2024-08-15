@@ -8,10 +8,11 @@ public static class PlaylistsManagementService
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
+        var notFoundedSongs = playlist.GetNotFoundedSongs();
 
         return new GetNotFoundedSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            NotFoundedSongs: playlist.NotFoundedSongs
+            NotFoundedSongs: notFoundedSongs.Select(i => i.Path)
         );
     }
 
@@ -28,7 +29,8 @@ public static class PlaylistsManagementService
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
-        var duplicateSongs = playlist.RemoveDuplicateSongs();
+        var duplicateSongs = playlist.GetDuplicateSongs();
+        playlist.RemoveDuplicateSongs();
         playlist.Save();
 
         return new RemoveDuplicateSongsInPlaylistResultVm(

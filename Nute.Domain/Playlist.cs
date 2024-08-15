@@ -7,25 +7,27 @@ public sealed class Playlist
 {
     private const string PLAYLIST_TYPE = ".m3u8";
 
-    private List<Song> _songs = [];
-
     public string Path { get; }
     public string Title { get; }
-    public IEnumerable<Song> Songs => _songs;
-    public IEnumerable<string> NotFoundedSongs { get; }
+    public IEnumerable<PlaylistSong> Songs { get; private set; }
 
-    private Playlist(string path, string title, IEnumerable<Song> songs, IEnumerable<string> notFoundedSongs)
+    private Playlist(string path, string title, IEnumerable<PlaylistSong> songs)
     {
         Path = path;
         Title = title;
-        _songs = songs.ToList();
-        NotFoundedSongs = notFoundedSongs;
+        Songs = songs;
     }
 
-    public IEnumerable<Song> GetDuplicateSongs()
+    public IEnumerable<PlaylistSong> GetNotFoundedSongs()
+    {
+        var notFoundedSongs = Songs.Where(i => i.Song is null);
+        return notFoundedSongs;
+    }
+
+    public IEnumerable<PlaylistSong> GetDuplicateSongs()
     {
         var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<Song>();
+        var duplicateSongs = new List<PlaylistSong>();
 
         foreach (var song in Songs)
         {
@@ -38,32 +40,17 @@ public sealed class Playlist
         return duplicateSongs;
     }
 
-    public IEnumerable<Song> RemoveDuplicateSongs()
+    public void RemoveDuplicateSongs()
     {
         var duplicateSongs = GetDuplicateSongs();
-
-        _songs = _songs.Where(i => duplicateSongs.Contains(i) is false).ToList();
-
-        return duplicateSongs;
+        Songs = Songs.Where(i => !duplicateSongs.Contains(i));
     }
 
     public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
     {
-        var inCommonSongs = new List<Song>();
-
-        foreach (var song in Songs)
-        {
-            if (otherPlaylist.Songs.Contains(song))
-            {
-                inCommonSongs.Add(song);
-            }
-        }
-
-        var playlist1UniqueSongs = Songs.ToList();
-        playlist1UniqueSongs.RemoveAll(i => inCommonSongs.Contains(i));
-
-        var playlist2UniqueSongs = otherPlaylist.Songs.ToList();
-        playlist2UniqueSongs.RemoveAll(i => inCommonSongs.Contains(i));
+        var inCommonSongs = Songs.Where(i => otherPlaylist.Songs.Contains(i));
+        var playlist1UniqueSongs = Songs.Where(i => !inCommonSongs.Contains(i));
+        var playlist2UniqueSongs = otherPlaylist.Songs.Where(i => !inCommonSongs.Contains(i));
 
         return new ComparePlaylistsResultDto(
             Playlist1UniqueSongs: playlist1UniqueSongs,
@@ -81,11 +68,6 @@ public sealed class Playlist
         {
             stringBuilder.AppendLine(song.Path);
         }
-        foreach (var song in NotFoundedSongs)
-        {
-            stringBuilder.AppendLine(song);
-        }
-        //stringBuilder.Append("");
         File.WriteAllText(Path, stringBuilder.ToString());
     }
 
@@ -101,30 +83,38 @@ public sealed class Playlist
         var title = ExtractPlaylistTitle(playlistLines);
 
         var songsPaths = playlistLines[2..];
-        var songs = new List<Song>();
-        var notFoundedSongs = new List<string>();
+        var songs = new List<PlaylistSong>();
 
-        foreach (var songPath in songsPaths)
+        for (var i = 0; i < songsPaths.Length; i++)
         {
+            var songPath = songsPaths[i];
+            Song? song = null;
             try
             {
-                var song = Song.Parse(path: songPath);
-                songs.Add(song);
+                song = Song.Parse(path: songPath);
+
             }
             catch (SongFileNotExistDomainException)
             {
-                notFoundedSongs.Add(songPath);
             }
             catch (SongFilePathIsInvalidDomainException)
             {
+            }
+            finally
+            {
+                var playlistSong = new PlaylistSong(
+                    path: songPath,
+                    index: i,
+                    song: song
+                );
+                songs.Add(playlistSong);
             }
         }
 
         return new Playlist(
             path: path,
             title: title,
-            songs: songs,
-            notFoundedSongs: notFoundedSongs
+            songs: songs
         );
     }
 
