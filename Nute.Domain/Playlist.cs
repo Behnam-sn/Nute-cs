@@ -75,9 +75,17 @@ public sealed class Playlist
     public void Save()
     {
         var stringBuilder = new StringBuilder();
-        stringBuilder.Append("");
-        stringBuilder.Append($"#{Title}{PLAYLIST_TYPE}");
-        stringBuilder.Append(Songs);
+        stringBuilder.AppendLine("#EXTM3U");
+        stringBuilder.AppendLine($"#{Title}{PLAYLIST_TYPE}");
+        foreach (var song in Songs)
+        {
+            stringBuilder.AppendLine(song.Path);
+        }
+        foreach (var song in NotFoundedSongs)
+        {
+            stringBuilder.AppendLine(song);
+        }
+        //stringBuilder.Append("");
         File.WriteAllText(Path, stringBuilder.ToString());
     }
 
@@ -106,6 +114,9 @@ public sealed class Playlist
             catch (SongFileNotExistDomainException)
             {
                 notFoundedSongs.Add(songPath);
+            }
+            catch (SongFilePathIsInvalidDomainException)
+            {
             }
         }
 
