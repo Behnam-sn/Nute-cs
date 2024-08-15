@@ -57,6 +57,11 @@ public static class PlaylistManagementService
 
     public static SortPlaylistResultVm Sort(string playlistPath)
     {
+        // by year
+        // by albums
+        // by names
+        // by index
+        // by songs
         return new SortPlaylistResultVm();
     }
 
