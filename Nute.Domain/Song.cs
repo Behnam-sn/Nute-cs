@@ -1,4 +1,3 @@
-
 namespace Nute.Domain;
 
 public sealed class Song
@@ -14,6 +13,11 @@ public sealed class Song
 
     internal static Song Parse(string path)
     {
+        if (path is null || path is "" || path is " ")
+        {
+            throw new SongFilePathIsInvalidDomainException($"{path} is Not a Valid Path.");
+        }
+
         if (File.Exists(path) is false)
         {
             throw new SongFileNotExistDomainException($"{path} Doesn't Exist.");
