@@ -26,12 +26,13 @@ public static class PlaylistsManagementService
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
-        var result = playlist.RemoveDuplicateSongs();
+        var duplicateSongs = playlist.RemoveDuplicateSongs();
         playlist.Save();
 
         return new RemoveDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: result.DuplicateSongs);
+            DuplicateSongs: duplicateSongs
+        );
     }
 
     public static ComparePlaylistsResultVm ComparePlaylists(string playlist1Path, string playlist2Path)

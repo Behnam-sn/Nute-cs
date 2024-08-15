@@ -7,19 +7,52 @@ public sealed class Playlist
 {
     private const string PLAYLIST_TYPE = ".m3u8";
 
-    // private List<string> _notFoundedSongs = [];
+    private List<string> _songs = [];
 
     public string Path { get; }
     public string Title { get; }
-    public IEnumerable<string> Songs { get; private set; }
+    public IEnumerable<string> Songs => _songs;
     public IEnumerable<string> NotFoundedSongs { get; }
 
     private Playlist(string path, string title, IEnumerable<string> songs, IEnumerable<string> notFoundedSongs)
     {
         Path = path;
         Title = title;
-        Songs = songs;
+        _songs = songs.ToList();
         NotFoundedSongs = notFoundedSongs;
+    }
+
+    public IEnumerable<string> GetDuplicateSongs()
+    {
+        var uniqueSongs = new HashSet<string>();
+        var duplicateSongs = new List<string>();
+
+        foreach (var song in Songs)
+        {
+            if (uniqueSongs.Add(song) is false)
+            {
+                duplicateSongs.Add(song);
+            }
+        }
+
+        return duplicateSongs;
+    }
+
+    public IEnumerable<string> RemoveDuplicateSongs()
+    {
+        var uniqueSongs = new HashSet<string>();
+        var duplicateSongs = new List<string>();
+
+        foreach (var song in Songs)
+        {
+            if (uniqueSongs.Add(song) is false)
+            {
+                duplicateSongs.Add(song);
+                _songs.Remove(song);
+            }
+        }
+
+        return duplicateSongs;
     }
 
     public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
@@ -107,41 +140,5 @@ public sealed class Playlist
         }
 
         return notFoundedSongs;
-    }
-
-    public IEnumerable<string> GetDuplicateSongs()
-    {
-        var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<string>();
-
-        foreach (var song in Songs)
-        {
-            if (uniqueSongs.Add(song) is false)
-            {
-                duplicateSongs.Add(song);
-            }
-        }
-
-        return duplicateSongs;
-    }
-
-    public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
-    {
-        var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<string>();
-
-        foreach (var song in Songs)
-        {
-            if (uniqueSongs.Add(song) is false)
-            {
-                duplicateSongs.Add(song);
-            }
-        }
-
-        Songs = uniqueSongs;
-
-        return new RemoveDuplicateSongsInPlaylistResultDto(
-            UniqueSongs: uniqueSongs,
-            DuplicateSongs: duplicateSongs);
     }
 }

@@ -1,3 +1,3 @@
 namespace Nute.Application.Vms;
 
-public record RemoveDuplicateSongsInPlaylistResultVm(string PlaylistTitle, IEnumerable<string> DuplicateSongs);
+public sealed record RemoveDuplicateSongsInPlaylistResultVm(string PlaylistTitle, IEnumerable<string> DuplicateSongs);
