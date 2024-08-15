@@ -109,6 +109,22 @@ public sealed class Playlist
         return notFoundedSongs;
     }
 
+    public IEnumerable<string> GetDuplicateSongs()
+    {
+        var uniqueSongs = new HashSet<string>();
+        var duplicateSongs = new List<string>();
+
+        foreach (var song in Songs)
+        {
+            if (uniqueSongs.Add(song) is false)
+            {
+                duplicateSongs.Add(song);
+            }
+        }
+
+        return duplicateSongs;
+    }
+
     public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
     {
         var uniqueSongs = new HashSet<string>();

@@ -10,7 +10,17 @@ public static class PlaylistsManagementService
         var playlist = Playlist.Parse(path: playlistPath);
         return new GetNotFoundedSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            NotFoundedSongs: playlist.NotFoundedSongs);
+            NotFoundedSongs: playlist.NotFoundedSongs
+            );
+    }
+
+    public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongsInPlaylist(string playlistPath)
+    {
+        var playlist = Playlist.Parse(path: playlistPath);
+        return new GetDuplicateSongsInPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            DuplicateSongs: playlist.GetDuplicateSongs()
+        );
     }
 
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
