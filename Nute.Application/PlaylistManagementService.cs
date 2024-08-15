@@ -19,10 +19,11 @@ public static class PlaylistManagementService
     public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
+        var duplicateSongs = playlist.GetDuplicateSongs();
 
         return new GetDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: playlist.GetDuplicateSongs().Select(i => i.Path)
+            DuplicateSongs: duplicateSongs.Select(i => i.Path)
         );
     }
 
