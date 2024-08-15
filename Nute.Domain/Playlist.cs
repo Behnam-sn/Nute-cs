@@ -7,14 +7,14 @@ public sealed class Playlist
 {
     private const string PLAYLIST_TYPE = ".m3u8";
 
-    private List<string> _songs = [];
+    private List<Song> _songs = [];
 
     public string Path { get; }
     public string Title { get; }
-    public IEnumerable<string> Songs => _songs;
+    public IEnumerable<Song> Songs => _songs;
     public IEnumerable<string> NotFoundedSongs { get; }
 
-    private Playlist(string path, string title, IEnumerable<string> songs, IEnumerable<string> notFoundedSongs)
+    private Playlist(string path, string title, IEnumerable<Song> songs, IEnumerable<string> notFoundedSongs)
     {
         Path = path;
         Title = title;
@@ -22,10 +22,10 @@ public sealed class Playlist
         NotFoundedSongs = notFoundedSongs;
     }
 
-    public IEnumerable<string> GetDuplicateSongs()
+    public IEnumerable<Song> GetDuplicateSongs()
     {
-        var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<string>();
+        var uniqueSongs = new HashSet<Song>();
+        var duplicateSongs = new List<Song>();
 
         foreach (var song in Songs)
         {
@@ -38,26 +38,18 @@ public sealed class Playlist
         return duplicateSongs;
     }
 
-    public IEnumerable<string> RemoveDuplicateSongs()
+    public IEnumerable<Song> RemoveDuplicateSongs()
     {
-        var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<string>();
+        var duplicateSongs = GetDuplicateSongs();
 
-        foreach (var song in Songs)
-        {
-            if (uniqueSongs.Add(song) is false)
-            {
-                duplicateSongs.Add(song);
-                _songs.Remove(song);
-            }
-        }
+        _songs = _songs.Where(i => duplicateSongs.Contains(i) is false).ToList();
 
         return duplicateSongs;
     }
 
     public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
     {
-        var inCommonSongs = new List<string>();
+        var inCommonSongs = new List<Song>();
 
         foreach (var song in Songs)
         {
@@ -117,9 +109,18 @@ public sealed class Playlist
         return titleLine[1..lastIndexOfTag];
     }
 
-    private static string[] ExtractPlayListSongs(string[] playlistLines)
+    private static List<Song> ExtractPlayListSongs(string[] playlistLines)
     {
-        return playlistLines[2..];
+        var songsPaths = playlistLines[2..];
+        var songs = new List<Song>();
+
+        foreach (var songPath in songsPaths)
+        {
+            var song = Song.Parse(path: songPath);
+            songs.Add(song);
+        }
+
+        return songs;
     }
 
     private static List<string> ExtractNotFoundedSongs(string[] playlistLines)
