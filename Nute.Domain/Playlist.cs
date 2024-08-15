@@ -86,13 +86,28 @@ public sealed class Playlist
         var fileExtension = System.IO.Path.GetExtension(path);
         if (fileExtension is not PLAYLIST_TYPE)
         {
-            throw new Exception("Not a Acceptable Playlist Type");
+            throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
         }
 
         var playlistLines = File.ReadAllLines(path);
         var title = ExtractPlaylistTitle(playlistLines);
-        var songs = ExtractPlayListSongs(playlistLines);
-        var notFoundedSongs = ExtractNotFoundedSongs(playlistLines);
+
+        var songsPaths = playlistLines[2..];
+        var songs = new List<Song>();
+        var notFoundedSongs = new List<string>();
+
+        foreach (var songPath in songsPaths)
+        {
+            try
+            {
+                var song = Song.Parse(path: songPath);
+                songs.Add(song);
+            }
+            catch (SongFileNotExistDomainException)
+            {
+                notFoundedSongs.Add(songPath);
+            }
+        }
 
         return new Playlist(
             path: path,
@@ -107,35 +122,5 @@ public sealed class Playlist
         var titleLine = playlistLines[1];
         var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
         return titleLine[1..lastIndexOfTag];
-    }
-
-    private static List<Song> ExtractPlayListSongs(string[] playlistLines)
-    {
-        var songsPaths = playlistLines[2..];
-        var songs = new List<Song>();
-
-        foreach (var songPath in songsPaths)
-        {
-            var song = Song.Parse(path: songPath);
-            songs.Add(song);
-        }
-
-        return songs;
-    }
-
-    private static List<string> ExtractNotFoundedSongs(string[] playlistLines)
-    {
-        var songsPath = playlistLines[2..];
-        var notFoundedSongs = new List<string>();
-
-        foreach (var songPath in songsPath)
-        {
-            if (File.Exists(songPath) is false)
-            {
-                notFoundedSongs.Add(songPath);
-            }
-        }
-
-        return notFoundedSongs;
     }
 }

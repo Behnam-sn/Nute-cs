@@ -1,3 +1,4 @@
+
 namespace Nute.Domain;
 
 public sealed class Song
@@ -13,6 +14,11 @@ public sealed class Song
 
     internal static Song Parse(string path)
     {
+        if (File.Exists(path) is false)
+        {
+            throw new SongFileNotExistDomainException($"{path} Doesn't Exist.");
+        }
+
         var songFile = TagLib.File.Create(path: path);
         return new Song(
             path: path,
