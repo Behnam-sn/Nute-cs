@@ -5,7 +5,7 @@ namespace Nute.Application;
 
 public static class PlaylistManagementService
 {
-    public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongsInPlaylist(string playlistPath)
+    public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
         var notFoundedSongs = playlist.GetNotFoundedSongs();
@@ -16,7 +16,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongsInPlaylist(string playlistPath)
+    public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
 
@@ -26,7 +26,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
+    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
         var duplicateSongs = playlist.GetDuplicateSongs();
@@ -39,7 +39,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static ComparePlaylistsResultVm ComparePlaylists(string playlist1Path, string playlist2Path)
+    public static ComparePlaylistsResultVm Compare(string playlist1Path, string playlist2Path)
     {
         var playlist1 = Playlist.Parse(path: playlist1Path);
         var playlist2 = Playlist.Parse(path: playlist2Path);
@@ -54,12 +54,12 @@ public static class PlaylistManagementService
         );
     }
 
-    public static SortPlaylistResultVm SortPlaylist(string playlistPath)
+    public static SortPlaylistResultVm Sort(string playlistPath)
     {
         return new SortPlaylistResultVm();
     }
 
-    public static void AdaptPlaylistForAndroid(string playlistPath)
+    public static void AdaptForAndroid(string playlistPath)
     {
     }
 }
