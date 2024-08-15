@@ -3,55 +3,23 @@ using Nute.Domain.Dtos;
 
 namespace Nute.Domain;
 
-public class Playlist
+public sealed class Playlist
 {
     private const string PLAYLIST_TYPE = ".m3u8";
+
+    // private List<string> _notFoundedSongs = [];
 
     public string Path { get; }
     public string Title { get; }
     public IEnumerable<string> Songs { get; private set; }
+    public IEnumerable<string> NotFoundedSongs { get; }
 
-    public Playlist(string path, string title, IEnumerable<string> songs)
+    private Playlist(string path, string title, IEnumerable<string> songs, IEnumerable<string> notFoundedSongs)
     {
         Path = path;
         Title = title;
         Songs = songs;
-    }
-
-    public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
-    {
-        var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<string>();
-
-        foreach (var song in Songs)
-        {
-            if (uniqueSongs.Add(song) is false)
-            {
-                duplicateSongs.Add(song);
-            }
-        }
-
-        Songs = uniqueSongs;
-
-        return new RemoveDuplicateSongsInPlaylistResultDto(
-            UniqueSongs: uniqueSongs,
-            DuplicateSongs: duplicateSongs);
-    }
-
-    public FindNonExistentSongsInPlaylistResultDto FindNonExistentSongs()
-    {
-        var nonExistentSongs = new List<string>();
-
-        foreach (var song in Songs)
-        {
-            if (!File.Exists(song))
-            {
-                nonExistentSongs.Add(song);
-            }
-        }
-
-        return new FindNonExistentSongsInPlaylistResultDto(
-            NonExistentSongs: nonExistentSongs);
+        NotFoundedSongs = notFoundedSongs;
     }
 
     public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
@@ -94,10 +62,13 @@ public class Playlist
         var playlistLines = File.ReadAllLines(path);
         var title = ExtractPlaylistTitle(playlistLines);
         var songs = ExtractPlayListSongs(playlistLines);
+        var notFoundedSongs = ExtractNotFoundedSongs(playlistLines);
+
         return new Playlist(
             path: path,
             title: title,
-            songs: songs
+            songs: songs,
+            notFoundedSongs: notFoundedSongs
         );
     }
 
@@ -120,5 +91,41 @@ public class Playlist
     private static string[] ExtractPlayListSongs(string[] playlistLines)
     {
         return playlistLines[2..];
+    }
+
+    private static List<string> ExtractNotFoundedSongs(string[] playlistLines)
+    {
+        var songsPath = playlistLines[2..];
+        var notFoundedSongs = new List<string>();
+
+        foreach (var songPath in songsPath)
+        {
+            if (File.Exists(songPath) is false)
+            {
+                notFoundedSongs.Add(songPath);
+            }
+        }
+
+        return notFoundedSongs;
+    }
+
+    public RemoveDuplicateSongsInPlaylistResultDto RemoveDuplicateSongs()
+    {
+        var uniqueSongs = new HashSet<string>();
+        var duplicateSongs = new List<string>();
+
+        foreach (var song in Songs)
+        {
+            if (uniqueSongs.Add(song) is false)
+            {
+                duplicateSongs.Add(song);
+            }
+        }
+
+        Songs = uniqueSongs;
+
+        return new RemoveDuplicateSongsInPlaylistResultDto(
+            UniqueSongs: uniqueSongs,
+            DuplicateSongs: duplicateSongs);
     }
 }

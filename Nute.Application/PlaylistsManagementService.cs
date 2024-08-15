@@ -3,8 +3,16 @@ using Nute.Domain;
 
 namespace Nute.Application;
 
-public class PlaylistsManagementService
+public static class PlaylistsManagementService
 {
+    public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongsInPlaylist(string playlistPath)
+    {
+        var playlist = Playlist.Parse(path: playlistPath);
+        return new GetNotFoundedSongsInPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            NotFoundedSongs: playlist.NotFoundedSongs);
+    }
+
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
@@ -14,16 +22,6 @@ public class PlaylistsManagementService
         return new RemoveDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
             DuplicateSongs: result.DuplicateSongs);
-    }
-
-    public static FindNonExistentSongsInPlaylistResultVm FindNonExistentSongsInPlaylist(string playlistPath)
-    {
-        var playlist = Playlist.Parse(path: playlistPath);
-        var result = playlist.FindNonExistentSongs();
-
-        return new FindNonExistentSongsInPlaylistResultVm(
-            PlaylistTitle: playlist.Title,
-            NonExistentSongs: result.NonExistentSongs);
     }
 
     public static ComparePlaylistsResultVm ComparePlaylists(string playlist1Path, string playlist2Path)
