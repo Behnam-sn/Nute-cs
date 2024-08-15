@@ -1,9 +1,12 @@
 namespace Nute.Application;
 
-public class SongsManagementService
+public static class SongsManagementService
 {
+    public static void CompareSongs()
+    {
+    }
+
     public static void SyncSongsInPcWithPhone()
     {
-
     }
 }
