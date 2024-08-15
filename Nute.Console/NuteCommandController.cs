@@ -1,8 +1,8 @@
 ﻿namespace Nute.Console;
 
-public class NuteCommandController
+internal static class NuteCommandController
 {
-    public NuteCommandController()
+    internal static void Run()
     {
         while (true)
         {
@@ -31,14 +31,14 @@ public class NuteCommandController
 
     private static void PrintCommands()
     {
-        System.Console.WriteLine("playlist, m");
+        System.Console.WriteLine("playlist, p");
         System.Console.WriteLine("help, h");
         System.Console.WriteLine("exit, x");
     }
 
     private static void Playlist()
     {
-        _ = new PlaylistCommandController();
+        PlaylistCommandController.Run();
     }
 
     private static void Song()

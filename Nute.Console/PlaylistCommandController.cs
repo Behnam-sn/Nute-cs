@@ -2,9 +2,9 @@
 
 namespace Nute.Console;
 
-public class PlaylistCommandController
+internal static class PlaylistCommandController
 {
-    public PlaylistCommandController()
+    internal static void Run()
     {
         while (true)
         {
@@ -17,31 +17,87 @@ public class PlaylistCommandController
                     PrintCommands();
                     break;
 
-                case "Remove Duplicate Songs In A Playlist" or "rm":
+                case "exit" or "x":
+                    return;
+
+                case "Get Not Founded Songs" or "gnfs":
+                    GetNotFoundedSongsInPlaylist();
+                    break;
+
+                case "Get Duplicate Songs" or "gds":
+                    GetDuplicateSongsInPlaylist();
+                    break;
+
+                case "Remove Duplicate Songs" or "rds":
                     RemoveDuplicateSongsInPlaylist();
                     break;
 
                 case "Compare Playlists" or "cp":
                     ComparePlaylists();
                     break;
-
-                case "exit" or "x":
-                    return;
             }
         }
     }
 
     private static void PrintCommands()
     {
-        System.Console.WriteLine("Remove Duplicate Songs In A Playlist, rm");
-        System.Console.WriteLine("ComparePlaylists, cp");
+        System.Console.WriteLine("Get Not Founded Songs or gnfs");
+        System.Console.WriteLine("Get Duplicate Songs or gds");
+        System.Console.WriteLine("Remove Duplicate Songs or rds");
+        System.Console.WriteLine("Compare Playlists, cp");
         System.Console.WriteLine("help, h");
         System.Console.WriteLine("exit, x");
     }
 
+    private static void GetNotFoundedSongsInPlaylist()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var playlistPath = System.Console.ReadLine();
+        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Chill.m3u8";
+
+        try
+        {
+            var result = PlaylistsManagementService.GetNotFoundedSongsInPlaylist(playlistPath: playlistPath);
+            result.PrintInConsole();
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
+    }
+
+    private static void GetDuplicateSongsInPlaylist()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var playlistPath = System.Console.ReadLine();
+        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Chill.m3u8";
+
+        try
+        {
+            var result = PlaylistsManagementService.GetDuplicateSongsInPlaylist(playlistPath: playlistPath);
+            result.PrintInConsole();
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
+    }
+
     private static void RemoveDuplicateSongsInPlaylist()
     {
-        throw new NotImplementedException();
+        //System.Console.Write("Playlist Path: ");
+        //var playlistPath = System.Console.ReadLine();
+        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Chill.m3u8";
+
+        try
+        {
+            var result = PlaylistsManagementService.RemoveDuplicateSongsInPlaylist(playlistPath: playlistPath);
+            result.PrintInConsole();
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
     }
 
     private static void ComparePlaylists()
@@ -57,7 +113,7 @@ public class PlaylistCommandController
                 playlist1Path: playlist1Path,
                 playlist2Path: playlist2Path);
 
-            result.ShowInConsole();
+            result.PrintInConsole();
         }
         catch (Exception exception)
         {
