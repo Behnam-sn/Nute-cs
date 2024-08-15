@@ -57,7 +57,7 @@ internal static class PlaylistCommandController
 
         try
         {
-            var result = PlaylistsManagementService.GetNotFoundedSongsInPlaylist(playlistPath: playlistPath);
+            var result = PlaylistManagementService.GetNotFoundedSongsInPlaylist(playlistPath: playlistPath);
             result.PrintInConsole();
         }
         catch (Exception exception)
@@ -74,7 +74,7 @@ internal static class PlaylistCommandController
 
         try
         {
-            var result = PlaylistsManagementService.GetDuplicateSongsInPlaylist(playlistPath: playlistPath);
+            var result = PlaylistManagementService.GetDuplicateSongsInPlaylist(playlistPath: playlistPath);
             result.PrintInConsole();
         }
         catch (Exception exception)
@@ -91,7 +91,7 @@ internal static class PlaylistCommandController
 
         try
         {
-            var result = PlaylistsManagementService.RemoveDuplicateSongsInPlaylist(playlistPath: playlistPath);
+            var result = PlaylistManagementService.RemoveDuplicateSongsInPlaylist(playlistPath: playlistPath);
             result.PrintInConsole();
         }
         catch (Exception exception)
@@ -109,7 +109,7 @@ internal static class PlaylistCommandController
 
         try
         {
-            var result = PlaylistsManagementService.ComparePlaylists(
+            var result = PlaylistManagementService.ComparePlaylists(
                 playlist1Path: playlist1Path,
                 playlist2Path: playlist2Path);
 

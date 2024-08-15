@@ -3,7 +3,7 @@ using Nute.Domain;
 
 namespace Nute.Application;
 
-public static class PlaylistsManagementService
+public static class PlaylistManagementService
 {
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongsInPlaylist(string playlistPath)
     {
