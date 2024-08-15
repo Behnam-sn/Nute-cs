@@ -24,12 +24,12 @@ public sealed class Playlist
 
     public IEnumerable<Song> GetDuplicateSongs()
     {
-        var uniqueSongs = new HashSet<Song>();
+        var uniqueSongs = new HashSet<string>();
         var duplicateSongs = new List<Song>();
 
         foreach (var song in Songs)
         {
-            if (uniqueSongs.Add(song) is false)
+            if (uniqueSongs.Add(song.Path) is false)
             {
                 duplicateSongs.Add(song);
             }
