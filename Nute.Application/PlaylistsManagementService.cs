@@ -21,7 +21,7 @@ public static class PlaylistsManagementService
 
         return new GetDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: playlist.GetDuplicateSongs()
+            DuplicateSongs: playlist.GetDuplicateSongs().Select(i => i.Path)
         );
     }
 
@@ -33,7 +33,7 @@ public static class PlaylistsManagementService
 
         return new RemoveDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: duplicateSongs
+            DuplicateSongs: duplicateSongs.Select(i => i.Path)
         );
     }
 
@@ -45,10 +45,10 @@ public static class PlaylistsManagementService
 
         return new ComparePlaylistsResultVm(
             Playlist1Title: playlist1.Title,
-            Playlist1Songs: result.Playlist1UniqueSongs,
+            Playlist1Songs: result.Playlist1UniqueSongs.Select(i => i.Path),
             Playlist2Title: playlist2.Title,
-            Playlist2Songs: result.Playlist2UniqueSongs,
-            InCommonSongs: result.InCommonSongs
+            Playlist2Songs: result.Playlist2UniqueSongs.Select(i => i.Path),
+            InCommonSongs: result.InCommonSongs.Select(i => i.Path)
         );
     }
 
