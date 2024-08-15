@@ -76,7 +76,8 @@ public sealed class Playlist
         return new ComparePlaylistsResultDto(
             Playlist1UniqueSongs: playlist1UniqueSongs,
             Playlist2UniqueSongs: playlist2UniqueSongs,
-            InCommonSongs: inCommonSongs);
+            InCommonSongs: inCommonSongs
+        );
     }
 
     public void Save()
@@ -90,7 +91,11 @@ public sealed class Playlist
 
     public static Playlist Parse(string path)
     {
-        ValidatePlaylist(path);
+        var fileExtension = System.IO.Path.GetExtension(path);
+        if (fileExtension is not PLAYLIST_TYPE)
+        {
+            throw new Exception("Not a Acceptable Playlist Type");
+        }
 
         var playlistLines = File.ReadAllLines(path);
         var title = ExtractPlaylistTitle(playlistLines);
@@ -103,15 +108,6 @@ public sealed class Playlist
             songs: songs,
             notFoundedSongs: notFoundedSongs
         );
-    }
-
-    private static void ValidatePlaylist(string playlistPath)
-    {
-        var fileExtension = System.IO.Path.GetExtension(playlistPath);
-        if (fileExtension is not PLAYLIST_TYPE)
-        {
-            throw new Exception("Not a Acceptable Playlist Type");
-        }
     }
 
     private static string ExtractPlaylistTitle(string[] playlistLines)

@@ -48,7 +48,8 @@ public static class PlaylistsManagementService
             Playlist1Songs: result.Playlist1UniqueSongs,
             Playlist2Title: playlist2.Title,
             Playlist2Songs: result.Playlist2UniqueSongs,
-            InCommonSongs: result.InCommonSongs);
+            InCommonSongs: result.InCommonSongs
+        );
     }
 
     public static SortPlaylistResultVm SortPlaylist(string playlistPath)
