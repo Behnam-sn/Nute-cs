@@ -8,15 +8,17 @@ public static class PlaylistsManagementService
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
+
         return new GetNotFoundedSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
             NotFoundedSongs: playlist.NotFoundedSongs
-            );
+        );
     }
 
     public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(path: playlistPath);
+
         return new GetDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
             DuplicateSongs: playlist.GetDuplicateSongs()
@@ -56,6 +58,5 @@ public static class PlaylistsManagementService
 
     public static void AdaptPlaylistForAndroid(string playlistPath)
     {
-
     }
 }
