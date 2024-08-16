@@ -41,12 +41,13 @@ internal static class PlaylistCommandController
 
     private static void PrintCommands()
     {
+        System.Console.WriteLine("help, h");
+        System.Console.WriteLine("exit, x");
         System.Console.WriteLine("Get Not Founded Songs or gnfs");
         System.Console.WriteLine("Get Duplicate Songs or gds");
         System.Console.WriteLine("Remove Duplicate Songs or rds");
         System.Console.WriteLine("Compare Playlists, cp");
-        System.Console.WriteLine("help, h");
-        System.Console.WriteLine("exit, x");
+        System.Console.WriteLine("");
     }
 
     private static void GetNotFoundedSongsInPlaylist()
@@ -102,10 +103,12 @@ internal static class PlaylistCommandController
 
     private static void ComparePlaylists()
     {
-        System.Console.Write("Playlist 1 Path: ");
-        var playlist1Path = System.Console.ReadLine();
-        System.Console.Write("Playlist 2 Path: ");
-        var playlist2Path = System.Console.ReadLine();
+        //System.Console.Write("Playlist 1 Path: ");
+        //var playlist1Path = System.Console.ReadLine();
+        //System.Console.Write("Playlist 2 Path: ");
+        //var playlist2Path = System.Console.ReadLine();
+        var playlist1Path = "C:\\Users\\Behnam\\Music\\Playlists\\Persian.m3u8";
+        var playlist2Path = "C:\\Users\\Behnam\\Music\\Playlists\\Family Friendly.m3u8";
 
         try
         {
