@@ -62,4 +62,15 @@ internal static class VmHelpers
         }
         System.Console.WriteLine("");
     }
+
+    internal static void PrintInConsole(this SortPlaylistResultVm vm)
+    {
+        System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
+        System.Console.WriteLine("Sorted Songs:");
+        foreach (var song in vm.SortedSongs)
+        {
+            System.Console.WriteLine(song);
+        }
+        System.Console.WriteLine("");
+    }
 }

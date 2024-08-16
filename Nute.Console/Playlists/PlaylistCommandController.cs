@@ -35,6 +35,10 @@ internal static class PlaylistCommandController
                 case "Compare Playlists" or "cp":
                     ComparePlaylists();
                     break;
+
+                case "Sort" or "s":
+                    SortPlaylist();
+                    break;
             }
         }
     }
@@ -46,7 +50,8 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("Get Not Founded Songs or gnfs");
         System.Console.WriteLine("Get Duplicate Songs or gds");
         System.Console.WriteLine("Remove Duplicate Songs or rds");
-        System.Console.WriteLine("Compare Playlists, cp");
+        System.Console.WriteLine("Compare Playlists or cp");
+        System.Console.WriteLine("Sort or s");
         System.Console.WriteLine("");
     }
 
@@ -116,6 +121,23 @@ internal static class PlaylistCommandController
                 playlist1Path: playlist1Path,
                 playlist2Path: playlist2Path);
 
+            result.PrintInConsole();
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
+    }
+
+    private static void SortPlaylist()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var playlistPath = System.Console.ReadLine();
+        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Chill.m3u8";
+
+        try
+        {
+            var result = PlaylistManagementService.Sort(playlistPath: playlistPath);
             result.PrintInConsole();
         }
         catch (Exception exception)

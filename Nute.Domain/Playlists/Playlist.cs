@@ -67,7 +67,8 @@ public sealed class Playlist
         var stringBuilder = new StringBuilder();
         stringBuilder.AppendLine("#EXTM3U");
         stringBuilder.AppendLine($"#{Title}{PLAYLIST_TYPE}");
-        foreach (var song in Songs.OrderBy(i => i.Index))
+        var sortedSongs = Songs.OrderBy(i => i.Index);
+        foreach (var song in sortedSongs)
         {
             stringBuilder.AppendLine(song.Path);
         }
@@ -134,58 +135,65 @@ public sealed class Playlist
         // by names
         // by index
         // by songs
-        var songs = new SortedDictionary<string, IDKType>();
-
-        foreach (var song in Songs)
-        {
-            if (song.Value is null)
-            {
-                continue;
-            }
-
-            if (!songs.ContainsKey(song.Value.Year))
-            {
-                songs[song.Value.Year] = new();
-            }
-
-            if (song.Value.IsSingle)
-            {
-                songs[song.Value.Year].Singles.Add(song);
-            }
-            else
-            {
-                var cva = song.Value.Album + song.Value.Artist;
-                if (!songs[song.Value.Year].Albums.ContainsKey(cva))
-                {
-                    songs[song.Value.Year].Albums[cva] = new();
-                }
-                songs[song.Value.Year].Albums[cva].Add(song);
-            }
-        }
-
+        var aaaa = Songs.OrderBy(i => i.Value);
         var index = 0;
-        foreach (var item in songs.Values)
+        foreach (var song in aaaa)
         {
-            foreach (var album in item.Albums.Values)
-            {
-                foreach (var song in album.OrderBy(i => i.Value!.Index))
-                {
-                    song.UpdateIndex(index);
-                    index++;
-                }
-            }
-
-            foreach (var song in item.Singles.OrderBy(i => i.Value!.Title))
-            {
-                song.UpdateIndex(index);
-                index++;
-            }
+            song.UpdateIndex(newIndex: index);
+            index++;
         }
+        // var songs = new SortedDictionary<uint, IDKType>();
+
+        // foreach (var song in Songs)
+        // {
+        //     if (song.Value is null)
+        //     {
+        //         continue;
+        //     }
+
+        //     if (!songs.ContainsKey(song.Value.Year))
+        //     {
+        //         songs[song.Value.Year] = new();
+        //     }
+
+        //     if (song.Value.IsSingle)
+        //     {
+        //         songs[song.Value.Year].Singles.Add(song);
+        //     }
+        //     else
+        //     {
+        //         var cva = song.Value.Album + song.Value.Artist;
+        //         if (!songs[song.Value.Year].Albums.ContainsKey(cva))
+        //         {
+        //             songs[song.Value.Year].Albums[cva] = new();
+        //         }
+        //         songs[song.Value.Year].Albums[cva].Add(song);
+        //     }
+        // }
+
+        // var index = 0;
+        // foreach (var item in songs.Values)
+        // {
+        //     foreach (var album in item.Albums.Values)
+        //     {
+        //         foreach (var song in album.OrderBy(i => i.Value!.Index))
+        //         {
+        //             song.UpdateIndex(index);
+        //             index++;
+        //         }
+        //     }
+
+        //     foreach (var song in item.Singles.OrderBy(i => i.Value!.Title))
+        //     {
+        //         song.UpdateIndex(index);
+        //         index++;
+        //     }
+        // }
     }
 }
 
-internal class IDKType
-{
-    public SortedDictionary<string, List<PlaylistSong>> Albums { get; set; } = new();
-    public List<PlaylistSong> Singles { get; set; } = new();
-}
+// internal class IDKType
+// {
+//     public SortedDictionary<string, List<PlaylistSong>> Albums { get; set; } = new();
+//     public List<PlaylistSong> Singles { get; set; } = new();
+// }

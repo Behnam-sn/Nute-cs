@@ -2,7 +2,7 @@ using Nute.Domain.Songs.Exceptions;
 
 namespace Nute.Domain.Songs;
 
-public sealed class Song
+public sealed class Song : IComparable<Song>
 {
     public string Path { get; }
     public string Artist { get; }
@@ -25,6 +25,28 @@ public sealed class Song
         {
             IsSingle = true;
         }
+    }
+
+    public int CompareTo(Song? other)
+    {
+        if (other is null)
+        {
+            return 0;
+        }
+
+        if (Year < other.Year)
+        {
+            return 1;
+        }
+        else
+        {
+            if (Year > other.Year)
+            {
+                return -1;
+            }
+        }
+
+        return 0;
     }
 
     internal static Song Parse(string path)

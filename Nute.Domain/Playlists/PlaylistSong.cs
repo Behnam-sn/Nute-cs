@@ -15,9 +15,9 @@ public sealed class PlaylistSong : IEquatable<PlaylistSong>
         Value = song;
     }
 
-    internal void UpdateIndex(int index)
+    internal void UpdateIndex(int newIndex)
     {
-        Index = index;
+        Index = newIndex;
     }
 
     public bool Equals(PlaylistSong? other)
