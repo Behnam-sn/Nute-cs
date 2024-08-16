@@ -46,6 +46,7 @@ internal static class VmHelpers
         {
             System.Console.WriteLine(song);
         }
+        System.Console.WriteLine("");
         System.Console.WriteLine($"Playlist 2");
         System.Console.WriteLine($"Title: {vm.Playlist2Title}");
         System.Console.WriteLine("Unique Songs:");
@@ -53,6 +54,7 @@ internal static class VmHelpers
         {
             System.Console.WriteLine(song);
         }
+        System.Console.WriteLine("");
         System.Console.WriteLine("In Common Songs: ");
         foreach (var song in vm.InCommonSongs)
         {
