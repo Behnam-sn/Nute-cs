@@ -5,12 +5,26 @@ namespace Nute.Domain.Songs;
 public sealed class Song
 {
     public string Path { get; }
+    public string Artist { get; }
+    public string Album { get; }
     public string Title { get; }
+    public uint? Index { get; }
+    public uint Year { get; }
+    public bool IsSingle { get; }
 
-    public Song(string path, string title)
+    public Song(string path, string artist, string album, string title, uint? index, uint year)
     {
         Path = path;
+        Artist = artist;
+        Album = album;
         Title = title;
+        Index = index;
+        Year = year;
+
+        if (title.EndsWith("Single"))
+        {
+            IsSingle = true;
+        }
     }
 
     internal static Song Parse(string path)
@@ -28,7 +42,11 @@ public sealed class Song
         var songFile = TagLib.File.Create(path: path);
         return new Song(
             path: path,
-            title: songFile.Tag.Title
+            artist: songFile.Tag.FirstAlbumArtist,
+            album: songFile.Tag.Album,
+            title: songFile.Tag.Title,
+            index: songFile.Tag.Track,
+            year: songFile.Tag.Year
         );
     }
 }

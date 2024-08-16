@@ -1,3 +1,5 @@
+using Nute.Domain.Playlists;
+
 namespace Nute.Application.Playlists.Vms;
 
-public record SortPlaylistResultVm();
+public sealed record SortPlaylistResultVm(string PlaylistTitle, IEnumerable<string> SortedSongs);

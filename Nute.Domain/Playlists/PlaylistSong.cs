@@ -6,13 +6,13 @@ public sealed class PlaylistSong : IEquatable<PlaylistSong>
 {
     public string Path { get; }
     public int Index { get; private set; }
-    public Song? Song { get; }
+    public Song? Value { get; }
 
     internal PlaylistSong(string path, int index, Song? song)
     {
         Path = path;
         Index = index;
-        Song = song;
+        Value = song;
     }
 
     internal void UpdateIndex(int index)

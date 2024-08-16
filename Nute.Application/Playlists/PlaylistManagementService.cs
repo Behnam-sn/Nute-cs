@@ -57,12 +57,14 @@ public static class PlaylistManagementService
 
     public static SortPlaylistResultVm Sort(string playlistPath)
     {
-        // by year
-        // by albums
-        // by names
-        // by index
-        // by songs
-        return new SortPlaylistResultVm();
+        var playlist = Playlist.Parse(path: playlistPath);
+        playlist.Sort();
+        playlist.Save();
+
+        return new SortPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            SortedSongs: playlist.Songs.Select(i => i.Path)
+        );
     }
 
     public static void AdaptForAndroid(string playlistPath)
