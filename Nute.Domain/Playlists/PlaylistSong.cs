@@ -1,18 +1,17 @@
-using System.Diagnostics.CodeAnalysis;
 using Nute.Domain.Songs;
 
 namespace Nute.Domain.Playlists;
 
-public sealed class PlaylistSong : IEqualityComparer<PlaylistSong>
+public sealed class PlaylistSong : IEquatable<PlaylistSong>
 {
-    public int Index { get; private set; }
     public string Path { get; }
+    public int Index { get; private set; }
     public Song? Song { get; }
 
-    internal PlaylistSong(int index, string path, Song? song)
+    internal PlaylistSong(string path, int index, Song? song)
     {
-        Index = index;
         Path = path;
+        Index = index;
         Song = song;
     }
 
@@ -21,23 +20,43 @@ public sealed class PlaylistSong : IEqualityComparer<PlaylistSong>
         Index = index;
     }
 
-    public bool Equals(PlaylistSong? x, PlaylistSong? y)
+    public bool Equals(PlaylistSong? other)
     {
-        if (x is null || y is null)
+        if (other is null)
         {
             return false;
         }
 
-        if (x.Path == y.Path)
+        if (other.GetType() != GetType())
         {
-            return true;
+            return false;
         }
 
-        return false;
+        return other.Path == Path;
     }
 
-    public int GetHashCode([DisallowNull] PlaylistSong obj)
+    public override bool Equals(object? obj)
     {
-        return obj.Path.GetHashCode();
+        if (obj is null)
+        {
+            return false;
+        }
+
+        if (obj.GetType() != GetType())
+        {
+            return false;
+        }
+
+        if (obj is not PlaylistSong entity)
+        {
+            return false;
+        }
+
+        return entity.Path == Path;
+    }
+
+    public override int GetHashCode()
+    {
+        return Path.GetHashCode();
     }
 }
