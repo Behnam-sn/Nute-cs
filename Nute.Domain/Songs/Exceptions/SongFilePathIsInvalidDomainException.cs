@@ -1,4 +1,4 @@
-﻿namespace Nute.Domain;
+﻿namespace Nute.Domain.Songs.Exceptions;
 
 public sealed class SongFilePathIsInvalidDomainException : Exception
 {

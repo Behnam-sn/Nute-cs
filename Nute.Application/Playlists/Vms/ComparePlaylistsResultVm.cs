@@ -1,4 +1,4 @@
-namespace Nute.Application.Vms;
+namespace Nute.Application.Playlists.Vms;
 
 public record ComparePlaylistsResultVm(
     string Playlist1Title,

@@ -1,4 +1,6 @@
-﻿namespace Nute.Console;
+﻿using Nute.Console.Playlists;
+
+namespace Nute.Console;
 
 internal static class NuteCommandController
 {
