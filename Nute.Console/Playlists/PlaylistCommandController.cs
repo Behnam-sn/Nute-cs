@@ -133,7 +133,7 @@ internal static class PlaylistCommandController
     {
         //System.Console.Write("Playlist Path: ");
         //var playlistPath = System.Console.ReadLine();
-        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Chill.m3u8";
+        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Play On 2010s.m3u8";
 
         try
         {

@@ -136,6 +136,7 @@ public sealed class Playlist
     {
         var titleLine = playlistLines[1];
         var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
+        // TODO: Throw exception here
         return titleLine[1..lastIndexOfTag];
     }
 }
