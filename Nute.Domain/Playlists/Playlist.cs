@@ -73,6 +73,19 @@ public sealed class Playlist
         }
     }
 
+    public void UpdateSongsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
+    {
+        foreach (var song in Songs)
+        {
+            var newPath = song.Path.Replace(oldBasePath, newBasePath);
+            if (isNewBasePathLinuxBased)
+            {
+                newPath = newPath.Replace("\\", "/");
+            }
+            song.UpdatePath(newPath: newPath);
+        }
+    }
+
     public void Save(string? destinationDirectoryPath = null)
     {
         var stringBuilder = new StringBuilder();
@@ -147,18 +160,5 @@ public sealed class Playlist
         var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
         // TODO: Throw exception here
         return titleLine[1..lastIndexOfTag];
-    }
-
-    public void UpdateSongsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
-    {
-        foreach (var song in Songs)
-        {
-            var newPath = song.Path.Replace(oldBasePath, newBasePath);
-            if (isNewBasePathLinuxBased)
-            {
-                newPath = newPath.Replace("\\", "/");
-            }
-            song.UpdatePath(newPath: newPath);
-        }
     }
 }
