@@ -39,6 +39,10 @@ internal static class PlaylistCommandController
                 case "Sort" or "s":
                     SortPlaylist();
                     break;
+
+                case "Convert From Windows To Linux" or "cfwtl":
+                    ConvertFromWindowsToLinux();
+                    break;
             }
         }
     }
@@ -52,6 +56,7 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("Remove Duplicate Songs or rds");
         System.Console.WriteLine("Compare Playlists or cp");
         System.Console.WriteLine("Sort or s");
+        System.Console.WriteLine("Convert From Windows To Linux or cfwtl");
         System.Console.WriteLine("");
     }
 
@@ -138,6 +143,32 @@ internal static class PlaylistCommandController
         try
         {
             var result = PlaylistManagementService.Sort(playlistPath: playlistPath);
+            result.PrintInConsole();
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
+    }
+
+    private static void ConvertFromWindowsToLinux()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var playlistPath = System.Console.ReadLine();
+        var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Play On 2010s.m3u8";
+        var oldBasePath = "";
+        var newBasePath = "";
+        var destinationDirectoryPath = "";
+
+        try
+        {
+            var result = PlaylistManagementService.UpdateSongsBasePath(
+                playlistPath: playlistPath,
+                oldBasePath: oldBasePath,
+                newBasePath: newBasePath,
+                isNewBasePathLinuxBased: true,
+                destinationDirectoryPath: destinationDirectoryPath
+            );
             result.PrintInConsole();
         }
         catch (Exception exception)

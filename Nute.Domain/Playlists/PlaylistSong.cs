@@ -4,7 +4,7 @@ namespace Nute.Domain.Playlists;
 
 public sealed class PlaylistSong : IEquatable<PlaylistSong>
 {
-    public string Path { get; }
+    public string Path { get; private set; }
     public int Index { get; private set; }
     public Song? Value { get; }
 
@@ -18,6 +18,11 @@ public sealed class PlaylistSong : IEquatable<PlaylistSong>
     internal void UpdateIndex(int newIndex)
     {
         Index = newIndex;
+    }
+
+    internal void UpdatePath(string newPath)
+    {
+        Path = newPath;
     }
 
     public bool Equals(PlaylistSong? other)

@@ -7,7 +7,7 @@ public static class PlaylistManagementService
 {
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongs(string playlistPath)
     {
-        var playlist = Playlist.Parse(path: playlistPath);
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
         var notFoundedSongs = playlist.GetNotFoundedSongs();
 
         return new GetNotFoundedSongsInPlaylistResultVm(
@@ -18,7 +18,7 @@ public static class PlaylistManagementService
 
     public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongs(string playlistPath)
     {
-        var playlist = Playlist.Parse(path: playlistPath);
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
         var duplicateSongs = playlist.GetDuplicateSongs();
 
         return new GetDuplicateSongsInPlaylistResultVm(
@@ -29,7 +29,7 @@ public static class PlaylistManagementService
 
     public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongs(string playlistPath)
     {
-        var playlist = Playlist.Parse(path: playlistPath);
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
         var duplicateSongs = playlist.GetDuplicateSongs();
         playlist.RemoveDuplicateSongs();
         playlist.Save();
@@ -42,8 +42,8 @@ public static class PlaylistManagementService
 
     public static ComparePlaylistsResultVm Compare(string playlist1Path, string playlist2Path)
     {
-        var playlist1 = Playlist.Parse(path: playlist1Path);
-        var playlist2 = Playlist.Parse(path: playlist2Path);
+        var playlist1 = Playlist.Parse(playlistPath: playlist1Path);
+        var playlist2 = Playlist.Parse(playlistPath: playlist2Path);
         var result = playlist1.CompareTo(playlist2);
 
         return new ComparePlaylistsResultVm(
@@ -57,7 +57,7 @@ public static class PlaylistManagementService
 
     public static SortPlaylistResultVm Sort(string playlistPath)
     {
-        var playlist = Playlist.Parse(path: playlistPath);
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
         playlist.Sort();
         playlist.Save();
 
@@ -67,7 +67,18 @@ public static class PlaylistManagementService
         );
     }
 
-    public static void AdaptForAndroid(string playlistPath)
+    public static UpdateSongsPathResultVm UpdateSongsBasePath(string playlistPath, string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased, string destinationDirectoryPath)
     {
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
+        playlist.UpdateSongsBasePath(
+            oldBasePath: oldBasePath,
+            newBasePath: newBasePath,
+            isNewBasePathLinuxBased: isNewBasePathLinuxBased
+        );
+        playlist.Save(destinationDirectoryPath: destinationDirectoryPath);
+
+        return new UpdateSongsPathResultVm(
+            PlaylistTitle: playlist.Title
+        );
     }
 }

@@ -73,28 +73,28 @@ public sealed class Playlist
         }
     }
 
-    public void Save()
+    public void Save(string? destinationDirectoryPath = null)
     {
         var stringBuilder = new StringBuilder();
+
         stringBuilder.AppendLine("#EXTM3U");
         stringBuilder.AppendLine($"#{Title}{PLAYLIST_TYPE}");
+
         var sortedSongs = Songs.OrderBy(i => i.Index);
         foreach (var song in sortedSongs)
         {
             stringBuilder.AppendLine(song.Path);
         }
-        File.WriteAllText(Path, stringBuilder.ToString());
+
+        var path = destinationDirectoryPath is null ? Path : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}{PLAYLIST_TYPE}");
+        File.WriteAllText(path, stringBuilder.ToString());
     }
 
-    public static Playlist Parse(string path)
+    public static Playlist Parse(string playlistPath)
     {
-        var fileExtension = System.IO.Path.GetExtension(path);
-        if (fileExtension is not PLAYLIST_TYPE)
-        {
-            throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
-        }
+        ValidatePlaylistPath(playlistPath);
 
-        var playlistLines = File.ReadAllLines(path);
+        var playlistLines = File.ReadAllLines(playlistPath);
         var title = ExtractPlaylistTitle(playlistLines);
 
         var songsPaths = playlistLines[2..];
@@ -126,10 +126,19 @@ public sealed class Playlist
         }
 
         return new Playlist(
-            path: path,
+            path: playlistPath,
             title: title,
             songs: songs
         );
+    }
+
+    private static void ValidatePlaylistPath(string playlistPath)
+    {
+        var fileExtension = System.IO.Path.GetExtension(playlistPath);
+        if (fileExtension is not PLAYLIST_TYPE)
+        {
+            throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
+        }
     }
 
     private static string ExtractPlaylistTitle(string[] playlistLines)
@@ -138,5 +147,18 @@ public sealed class Playlist
         var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
         // TODO: Throw exception here
         return titleLine[1..lastIndexOfTag];
+    }
+
+    public void UpdateSongsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
+    {
+        foreach (var song in Songs)
+        {
+            var newPath = song.Path.Replace(oldBasePath, newBasePath);
+            if (isNewBasePathLinuxBased)
+            {
+                newPath = newPath.Replace("\\", "/");
+            }
+            song.UpdatePath(newPath: newPath);
+        }
     }
 }

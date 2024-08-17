@@ -73,4 +73,9 @@ internal static class VmHelpers
         }
         System.Console.WriteLine("");
     }
+
+    internal static void PrintInConsole(this UpdateSongsPathResultVm vm)
+    {
+        System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
+    }
 }
