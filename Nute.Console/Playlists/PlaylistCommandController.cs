@@ -40,8 +40,8 @@ internal static class PlaylistCommandController
                     SortPlaylist();
                     break;
 
-                case "Convert From Windows To Linux" or "cfwtl":
-                    ConvertFromWindowsToLinux();
+                case "Update Songs Base Path" or "usbp":
+                    UpdateSongsBasePath();
                     break;
             }
         }
@@ -56,7 +56,7 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("Remove Duplicate Songs or rds");
         System.Console.WriteLine("Compare Playlists or cp");
         System.Console.WriteLine("Sort or s");
-        System.Console.WriteLine("Convert From Windows To Linux or cfwtl");
+        System.Console.WriteLine("Update Songs Base Path or usbp");
         System.Console.WriteLine("");
     }
 
@@ -151,14 +151,14 @@ internal static class PlaylistCommandController
         }
     }
 
-    private static void ConvertFromWindowsToLinux()
+    private static void UpdateSongsBasePath()
     {
         //System.Console.Write("Playlist Path: ");
         //var playlistPath = System.Console.ReadLine();
         var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Play On 2010s.m3u8";
-        var oldBasePath = "";
-        var newBasePath = "";
-        var destinationDirectoryPath = "";
+        var oldBasePath = "D:";
+        var newBasePath = "/storeage/emulated/0";
+        var destinationDirectoryPath = "D:\\Musics\\Playlist Converted";
 
         try
         {
