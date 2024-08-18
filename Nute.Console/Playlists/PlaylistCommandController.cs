@@ -157,7 +157,7 @@ internal static class PlaylistCommandController
         //var playlistPath = System.Console.ReadLine();
         var playlistPath = "C:\\Users\\Behnam\\Music\\Playlists\\Play On 2010s.m3u8";
         var oldBasePath = "D:";
-        var newBasePath = "/storeage/emulated/0";
+        var newBasePath = "/storage/emulated/0";
         var destinationDirectoryPath = "D:\\Musics\\Playlist Converted";
 
         try
