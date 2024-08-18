@@ -17,30 +17,30 @@ internal static class PlaylistCommandController
                     PrintCommands();
                     break;
 
-                case "exit" or "x":
+                case "exit" or "e":
                     return;
 
-                case "Get Not Founded Songs" or "gnfs":
+                case "get not founded songs" or "gnfs":
                     GetNotFoundedSongsInPlaylist();
                     break;
 
-                case "Get Duplicate Songs" or "gds":
+                case "get duplicate songs" or "gds":
                     GetDuplicateSongsInPlaylist();
                     break;
 
-                case "Remove Duplicate Songs" or "rds":
+                case "remove duplicate songs" or "rds":
                     RemoveDuplicateSongsInPlaylist();
                     break;
 
-                case "Compare Playlists" or "cp":
+                case "compare playlists" or "cp":
                     ComparePlaylists();
                     break;
 
-                case "Sort" or "s":
+                case "sort" or "s":
                     SortPlaylist();
                     break;
 
-                case "Update Songs Base Path" or "usbp":
+                case "update songs base path" or "usbp":
                     UpdateSongsBasePath();
                     break;
             }
@@ -49,8 +49,8 @@ internal static class PlaylistCommandController
 
     private static void PrintCommands()
     {
-        System.Console.WriteLine("help, h");
-        System.Console.WriteLine("exit, x");
+        System.Console.WriteLine("help or h");
+        System.Console.WriteLine("exit or e");
         System.Console.WriteLine("Get Not Founded Songs or gnfs");
         System.Console.WriteLine("Get Duplicate Songs or gds");
         System.Console.WriteLine("Remove Duplicate Songs or rds");
