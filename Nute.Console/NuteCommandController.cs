@@ -1,4 +1,5 @@
 ﻿using Nute.Console.Playlists;
+using Nute.Console.Songs;
 
 namespace Nute.Console;
 
@@ -17,6 +18,9 @@ internal static class NuteCommandController
                     PrintCommands();
                     break;
 
+                case "exit" or "e":
+                    return;
+
                 case "playlist" or "p":
                     Playlist();
                     break;
@@ -24,18 +28,16 @@ internal static class NuteCommandController
                 case "song" or "s":
                     Song();
                     break;
-
-                case "exit" or "x":
-                    return;
             }
         }
     }
 
     private static void PrintCommands()
     {
-        System.Console.WriteLine("playlist, p");
-        System.Console.WriteLine("help, h");
-        System.Console.WriteLine("exit, x");
+        System.Console.WriteLine("Help or h");
+        System.Console.WriteLine("Exit or e");
+        System.Console.WriteLine("Playlist or p");
+        System.Console.WriteLine("Song or s");
     }
 
     private static void Playlist()
@@ -45,6 +47,6 @@ internal static class NuteCommandController
 
     private static void Song()
     {
-        throw new NotImplementedException();
+        SongCommandController.Run();
     }
 }
