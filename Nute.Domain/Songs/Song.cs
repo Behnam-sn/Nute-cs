@@ -2,7 +2,7 @@ using Nute.Domain.Songs.Exceptions;
 
 namespace Nute.Domain.Songs;
 
-public sealed class Song : IComparable<Song>
+public sealed class Song : IEquatable<Song>, IComparable<Song>
 {
     public string Path { get; }
     public string Artist { get; }
@@ -25,6 +25,11 @@ public sealed class Song : IComparable<Song>
         {
             IsSingle = true;
         }
+    }
+
+    public bool Equals(Song? other)
+    {
+        throw new NotImplementedException();
     }
 
     public int CompareTo(Song? other)
@@ -97,7 +102,7 @@ public sealed class Song : IComparable<Song>
         return 0;
     }
 
-    internal static Song Parse(string path)
+    public static Song Parse(string path)
     {
         if (path is null || path is "" || path is " ")
         {

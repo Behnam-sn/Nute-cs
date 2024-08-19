@@ -42,7 +42,7 @@ internal static class SongCommandController
 
         try
         {
-            var result = SongsManagementService.idk(
+            var result = SongsManagementService.CompareAllSongs(
                 sourcePath: sourcePath,
                 destinationPath: destinationPath
             );
