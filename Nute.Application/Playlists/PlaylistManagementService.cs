@@ -5,6 +5,17 @@ namespace Nute.Application.Playlists;
 
 public static class PlaylistManagementService
 {
+    public static IEnumerable<GetNotFoundedSongsInPlaylistResultVm> GetAllNotFoundedSongs(string sourcePath)
+    {
+        if (!Directory.Exists(sourcePath))
+        {
+            throw new Exception($"{sourcePath} doesn't exists.");
+        }
+
+        var playlists = Directory.EnumerateFiles(sourcePath);
+        return playlists.Select(GetNotFoundedSongs);
+    }
+
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
