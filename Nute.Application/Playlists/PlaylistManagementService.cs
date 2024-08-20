@@ -12,7 +12,7 @@ public static class PlaylistManagementService
             throw new Exception($"{sourcePath} doesn't exists.");
         }
 
-        var playlists = Directory.EnumerateFiles(sourcePath);
+        var playlists = Directory.EnumerateFiles(sourcePath, "*.m3u8");
         return playlists.Select(GetNotFoundedSongs);
     }
 
@@ -23,7 +23,7 @@ public static class PlaylistManagementService
             throw new Exception($"{sourcePath} doesn't exists.");
         }
 
-        var playlists = Directory.EnumerateFiles(sourcePath);
+        var playlists = Directory.EnumerateFiles(sourcePath, "*.m3u8");
         return playlists.Select(GetDuplicateSongs);
     }
 
