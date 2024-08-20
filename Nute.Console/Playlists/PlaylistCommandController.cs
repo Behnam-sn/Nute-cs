@@ -28,6 +28,10 @@ internal static class PlaylistCommandController
                     GetAllDuplicateSongsInPlaylist();
                     break;
 
+                case "all update songs base path" or "ausbp":
+                    AllUpdateSongsBasePath();
+                    break;
+
                 case "get not founded songs" or "gnfs":
                     GetNotFoundedSongsInPlaylist();
                     break;
@@ -61,6 +65,7 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("exit or e");
         System.Console.WriteLine("Get All Not Founded Songs or ganfs");
         System.Console.WriteLine("Get All Duplicate Songs or gads");
+        System.Console.WriteLine("All Update Songs Base Path or ausbp");
         System.Console.WriteLine("Get Not Founded Songs or gnfs");
         System.Console.WriteLine("Get Duplicate Songs or gds");
         System.Console.WriteLine("Remove Duplicate Songs or rds");
@@ -99,6 +104,35 @@ internal static class PlaylistCommandController
         try
         {
             var result = PlaylistManagementService.GetAllDuplicateSongs(sourcePath: sourcePath);
+            foreach (var item in result)
+            {
+                item.PrintInConsole();
+            }
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
+    }
+
+    private static void AllUpdateSongsBasePath()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var sourcePath = System.Console.ReadLine();
+        var sourcePath = "C:\\Users\\Behnam\\Music\\Playlists";
+        var oldBasePath = "D:";
+        var newBasePath = "/storage/emulated/0";
+        var destinationDirectoryPath = "D:\\Musics\\Playlist Converted";
+
+        try
+        {
+            var result = PlaylistManagementService.AllUpdateSongsBasePath(
+                sourcePath: sourcePath,
+                oldBasePath: oldBasePath,
+                newBasePath: newBasePath,
+                isNewBasePathLinuxBased: true,
+                destinationDirectoryPath: destinationDirectoryPath
+            );
             foreach (var item in result)
             {
                 item.PrintInConsole();
