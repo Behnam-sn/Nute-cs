@@ -24,6 +24,10 @@ internal static class PlaylistCommandController
                     GetAllNotFoundedSongsInPlaylist();
                     break;
 
+                case "get all duplicate songs" or "gads":
+                    GetAllDuplicateSongsInPlaylist();
+                    break;
+
                 case "get not founded songs" or "gnfs":
                     GetNotFoundedSongsInPlaylist();
                     break;
@@ -56,6 +60,7 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("help or h");
         System.Console.WriteLine("exit or e");
         System.Console.WriteLine("Get All Not Founded Songs or ganfs");
+        System.Console.WriteLine("Get All Duplicate Songs or gads");
         System.Console.WriteLine("Get Not Founded Songs or gnfs");
         System.Console.WriteLine("Get Duplicate Songs or gds");
         System.Console.WriteLine("Remove Duplicate Songs or rds");
@@ -64,7 +69,6 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("Update Songs Base Path or usbp");
         System.Console.WriteLine("");
     }
-
 
     private static void GetAllNotFoundedSongsInPlaylist()
     {
@@ -75,6 +79,26 @@ internal static class PlaylistCommandController
         try
         {
             var result = PlaylistManagementService.GetAllNotFoundedSongs(sourcePath: sourcePath);
+            foreach (var item in result)
+            {
+                item.PrintInConsole();
+            }
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
+    }
+
+    private static void GetAllDuplicateSongsInPlaylist()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var sourcePath = System.Console.ReadLine();
+        var sourcePath = "C:\\Users\\Behnam\\Music\\Playlists";
+
+        try
+        {
+            var result = PlaylistManagementService.GetAllDuplicateSongs(sourcePath: sourcePath);
             foreach (var item in result)
             {
                 item.PrintInConsole();
