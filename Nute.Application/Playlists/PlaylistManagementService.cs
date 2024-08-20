@@ -16,6 +16,17 @@ public static class PlaylistManagementService
         return playlists.Select(GetNotFoundedSongs);
     }
 
+    public static IEnumerable<GetDuplicateSongsInPlaylistResultVm> GetAllDuplicateSongs(string sourcePath)
+    {
+        if (!Directory.Exists(sourcePath))
+        {
+            throw new Exception($"{sourcePath} doesn't exists.");
+        }
+
+        var playlists = Directory.EnumerateFiles(sourcePath);
+        return playlists.Select(GetDuplicateSongs);
+    }
+
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
