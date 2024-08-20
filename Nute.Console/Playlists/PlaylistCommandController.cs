@@ -20,12 +20,12 @@ internal static class PlaylistCommandController
                 case "exit" or "e":
                     return;
 
-                case "get not founded songs" or "gnfs":
-                    GetNotFoundedSongsInPlaylist();
-                    break;
-
                 case "get all not founded songs" or "ganfs":
                     GetAllNotFoundedSongsInPlaylist();
+                    break;
+
+                case "get not founded songs" or "gnfs":
+                    GetNotFoundedSongsInPlaylist();
                     break;
 
                 case "get duplicate songs" or "gds":
