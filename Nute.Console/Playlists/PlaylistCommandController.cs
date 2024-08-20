@@ -24,6 +24,10 @@ internal static class PlaylistCommandController
                     GetNotFoundedSongsInPlaylist();
                     break;
 
+                case "get all not founded songs" or "ganfs":
+                    GetAllNotFoundedSongsInPlaylist();
+                    break;
+
                 case "get duplicate songs" or "gds":
                     GetDuplicateSongsInPlaylist();
                     break;
@@ -51,6 +55,7 @@ internal static class PlaylistCommandController
     {
         System.Console.WriteLine("help or h");
         System.Console.WriteLine("exit or e");
+        System.Console.WriteLine("Get All Not Founded Songs or ganfs");
         System.Console.WriteLine("Get Not Founded Songs or gnfs");
         System.Console.WriteLine("Get Duplicate Songs or gds");
         System.Console.WriteLine("Remove Duplicate Songs or rds");
@@ -58,6 +63,27 @@ internal static class PlaylistCommandController
         System.Console.WriteLine("Sort or s");
         System.Console.WriteLine("Update Songs Base Path or usbp");
         System.Console.WriteLine("");
+    }
+
+
+    private static void GetAllNotFoundedSongsInPlaylist()
+    {
+        //System.Console.Write("Playlist Path: ");
+        //var sourcePath = System.Console.ReadLine();
+        var sourcePath = "C:\\Users\\Behnam\\Music\\Playlists";
+
+        try
+        {
+            var result = PlaylistManagementService.GetAllNotFoundedSongs(sourcePath: sourcePath);
+            foreach (var item in result)
+            {
+                item.PrintInConsole();
+            }
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
     }
 
     private static void GetNotFoundedSongsInPlaylist()
