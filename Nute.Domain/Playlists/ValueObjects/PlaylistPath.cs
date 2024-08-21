@@ -4,9 +4,9 @@ public readonly struct PlaylistPath
 {
     public string Value { get; }
 
-    private PlaylistPath(string path)
+    private PlaylistPath(string value)
     {
-        Value = path;
+        Value = value;
     }
 
     public override string ToString()
@@ -17,7 +17,7 @@ public readonly struct PlaylistPath
     internal static PlaylistPath Parse(string playlistPath)
     {
         return new PlaylistPath(
-            path: playlistPath
+            value: playlistPath
         );
     }
 

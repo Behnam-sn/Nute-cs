@@ -7,9 +7,9 @@ public readonly struct PlaylistType
 {
     public PlaylistTypes Value { get; }
 
-    private PlaylistType(PlaylistTypes type)
+    private PlaylistType(PlaylistTypes value)
     {
-        Value = type;
+        Value = value;
     }
 
     public override string ToString()
@@ -25,7 +25,7 @@ public readonly struct PlaylistType
         try
         {
             return new PlaylistType(
-                type: Enum.Parse<PlaylistTypes>(fileExtensionWithoutDot)
+                value: Enum.Parse<PlaylistTypes>(fileExtensionWithoutDot)
             );
         }
         catch (Exception)
