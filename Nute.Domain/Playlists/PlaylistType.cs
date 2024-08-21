@@ -1,18 +1,35 @@
+using Nute.Domain.Playlists.Exceptions;
+
 namespace Nute.Domain.Playlists;
 
-public struct PlaylistType
+public readonly struct PlaylistType
 {
-    public PlaylistTypes Type { get; }
+    public PlaylistTypes Value { get; }
 
     private PlaylistType(PlaylistTypes type)
     {
-        Type = type;
+        Value = type;
     }
 
-    internal static PlaylistType Parse()
+    public override string ToString()
     {
-        return new PlaylistType(
-            type: PlaylistTypes.m3u8
-        );
+        return Value.ToString();
+    }
+
+    internal static PlaylistType Parse(string playlistPath)
+    {
+        var fileExtension = Path.GetExtension(playlistPath);
+        var fileExtensionWithoutDot = fileExtension[1..];
+
+        try
+        {
+            return new PlaylistType(
+                type: Enum.Parse<PlaylistTypes>(fileExtensionWithoutDot)
+            );
+        }
+        catch (Exception)
+        {
+            throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
+        }
     }
 }

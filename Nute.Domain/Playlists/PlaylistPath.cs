@@ -1,36 +1,23 @@
-using Nute.Domain.Playlists.Exceptions;
-
 namespace Nute.Domain.Playlists;
 
-public struct PlaylistPath
+public readonly struct PlaylistPath
 {
-    private const string PLAYLIST_TYPE = ".m3u8";
+    public string Value { get; }
 
-    public string Path { get; }
-    public string Type { get; }
-
-    private PlaylistPath(string path, string type)
+    private PlaylistPath(string path)
     {
-        Path = path;
-        Type = type;
+        Value = path;
     }
 
-    private static void ValidatePlaylistPath(string playlistPath)
+    public override string ToString()
     {
-        var fileExtension = System.IO.Path.GetExtension(playlistPath);
-        if (fileExtension is not PLAYLIST_TYPE)
-        {
-            throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
-        }
+        return Value;
     }
 
     internal static PlaylistPath Parse(string playlistPath)
     {
-        ValidatePlaylistPath(playlistPath);
-
         return new PlaylistPath(
-            path: playlistPath,
-            type: PLAYLIST_TYPE
+            path: playlistPath
         );
     }
 }

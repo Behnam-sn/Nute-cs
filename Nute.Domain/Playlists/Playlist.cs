@@ -74,7 +74,7 @@ public sealed class Playlist
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine("#EXTM3U");
-        stringBuilder.AppendLine($"#{Title}{Path.Type}");
+        stringBuilder.AppendLine($"#{Title}.{Type}");
 
         var sortedItems = Items.OrderBy(i => i.Index);
         foreach (var item in sortedItems)
@@ -82,7 +82,7 @@ public sealed class Playlist
             stringBuilder.AppendLine(item.Path);
         }
 
-        var destinationPath = destinationDirectoryPath is null ? Path : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}{PLAYLIST_TYPE}");
+        var destinationPath = destinationDirectoryPath is null ? Path.Value : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}.{Type}");
         File.WriteAllText(destinationPath, stringBuilder.ToString());
     }
 
@@ -101,8 +101,11 @@ public sealed class Playlist
 
     public static Playlist Parse(string playlistPath)
     {
-        var type = PlaylistType.Parse();
         var path = PlaylistPath.Parse(
+            playlistPath: playlistPath
+        );
+
+        var type = PlaylistType.Parse(
             playlistPath: playlistPath
         );
 
@@ -128,8 +131,6 @@ public sealed class Playlist
             items: items
         );
     }
-
-
 
     private static string ExtractPlaylistTitle(string[] playlistLines)
     {
