@@ -5,50 +5,6 @@ namespace Nute.Application.Playlists;
 
 public static class PlaylistManagementService
 {
-    public static IEnumerable<GetNotFoundedSongsInPlaylistResultVm> GetAllNotFoundedSongs(string sourcePath)
-    {
-        if (!Directory.Exists(sourcePath))
-        {
-            throw new Exception($"{sourcePath} doesn't exists.");
-        }
-
-        var playlists = Directory.EnumerateFiles(sourcePath, "*.m3u8");
-        return playlists.Select(GetNotFoundedSongs);
-    }
-
-    public static IEnumerable<GetDuplicateSongsInPlaylistResultVm> GetAllDuplicateSongs(string sourcePath)
-    {
-        if (!Directory.Exists(sourcePath))
-        {
-            throw new Exception($"{sourcePath} doesn't exists.");
-        }
-
-        var playlists = Directory.EnumerateFiles(sourcePath, "*.m3u8");
-        return playlists.Select(GetDuplicateSongs);
-    }
-
-    public static IEnumerable<UpdateSongsPathResultVm> AllUpdateSongsBasePath(
-        string sourcePath,
-        string oldBasePath,
-        string newBasePath,
-        bool isNewBasePathLinuxBased,
-        string destinationDirectoryPath)
-    {
-        if (!Directory.Exists(sourcePath))
-        {
-            throw new Exception($"{sourcePath} doesn't exists.");
-        }
-
-        var playlists = Directory.EnumerateFiles(sourcePath, "*.m3u8");
-        return playlists.Select(i => UpdateSongsBasePath(
-            playlistPath: i,
-            oldBasePath: oldBasePath,
-            newBasePath: newBasePath,
-            isNewBasePathLinuxBased: isNewBasePathLinuxBased,
-            destinationDirectoryPath: destinationDirectoryPath
-        ));
-    }
-
     public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
