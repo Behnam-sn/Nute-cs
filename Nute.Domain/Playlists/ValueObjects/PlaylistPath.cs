@@ -1,4 +1,4 @@
-namespace Nute.Domain.Playlists;
+namespace Nute.Domain.Playlists.ValueObjects;
 
 public readonly struct PlaylistPath
 {

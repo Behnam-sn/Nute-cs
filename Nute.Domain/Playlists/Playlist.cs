@@ -1,5 +1,6 @@
 using System.Text;
 using Nute.Domain.Playlists.Dtos;
+using Nute.Domain.Playlists.ValueObjects;
 
 namespace Nute.Domain.Playlists;
 

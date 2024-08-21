@@ -1,6 +1,6 @@
 using Nute.Domain.Playlists.Exceptions;
 
-namespace Nute.Domain.Playlists;
+namespace Nute.Domain.Playlists.ValueObjects;
 
 public readonly struct PlaylistTitle
 {
