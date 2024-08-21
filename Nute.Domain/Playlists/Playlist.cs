@@ -21,48 +21,34 @@ public sealed class Playlist
         Items = items;
     }
 
-    public IEnumerable<PlaylistItem> GetNotFoundedSongs()
+    public IEnumerable<PlaylistItem> GetNotFoundedItems()
     {
-        var notFoundedSongs = Items.Where(i => i.Song is null);
-        return notFoundedSongs;
+        return Items.Where(i => i.Song is null);
     }
 
-    public IEnumerable<PlaylistItem> GetDuplicateSongs()
+    public IEnumerable<PlaylistItem> GetDuplicateItems()
     {
-        var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<PlaylistItem>();
+        var uniqueItems = new HashSet<string>();
+        var duplicateItems = new List<PlaylistItem>();
 
         foreach (var item in Items)
         {
-            if (!uniqueSongs.Add(item.Path))
+            if (!uniqueItems.Add(item.Path))
             {
-                duplicateSongs.Add(item);
+                duplicateItems.Add(item);
             }
         }
 
-        return duplicateSongs;
+        return duplicateItems;
     }
 
-    public void RemoveDuplicateSongs()
+    public void RemoveDuplicateItems()
     {
-        var duplicateSongs = GetDuplicateSongs();
-        Items = Items.Where(i => !duplicateSongs.Contains(i));
+        var duplicateItems = GetDuplicateItems();
+        Items = Items.Where(i => !duplicateItems.Contains(i));
     }
 
-    public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
-    {
-        var inCommonSongs = Items.Where(i => otherPlaylist.Items.Contains(i));
-        var playlist1UniqueSongs = Items.Where(i => !inCommonSongs.Contains(i));
-        var playlist2UniqueSongs = otherPlaylist.Items.Where(i => !inCommonSongs.Contains(i));
-
-        return new ComparePlaylistsResultDto(
-            Playlist1UniqueSongs: playlist1UniqueSongs,
-            Playlist2UniqueSongs: playlist2UniqueSongs,
-            InCommonSongs: inCommonSongs
-        );
-    }
-
-    public void Sort()
+    public void SortItems()
     {
         Items = Items.OrderBy(i => i.Song);
         var index = 0;
@@ -73,16 +59,16 @@ public sealed class Playlist
         }
     }
 
-    public void UpdateSongsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
+    public void UpdateItemsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
     {
-        foreach (var song in Items)
+        foreach (var item in Items)
         {
-            var newPath = song.Path.Replace(oldBasePath, newBasePath);
+            var newPath = item.Path.Replace(oldBasePath, newBasePath);
             if (isNewBasePathLinuxBased)
             {
                 newPath = newPath.Replace("\\", "/");
             }
-            song.UpdatePath(newPath: newPath);
+            item.UpdatePath(newPath: newPath);
         }
     }
 
@@ -93,14 +79,27 @@ public sealed class Playlist
         stringBuilder.AppendLine("#EXTM3U");
         stringBuilder.AppendLine($"#{Title}{PLAYLIST_TYPE}");
 
-        var sortedSongs = Items.OrderBy(i => i.Index);
-        foreach (var song in sortedSongs)
+        var sortedItems = Items.OrderBy(i => i.Index);
+        foreach (var item in sortedItems)
         {
-            stringBuilder.AppendLine(song.Path);
+            stringBuilder.AppendLine(item.Path);
         }
 
-        var path = destinationDirectoryPath is null ? Path : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}{PLAYLIST_TYPE}");
-        File.WriteAllText(path, stringBuilder.ToString());
+        var destinationPath = destinationDirectoryPath is null ? Path : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}{PLAYLIST_TYPE}");
+        File.WriteAllText(destinationPath, stringBuilder.ToString());
+    }
+
+    public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
+    {
+        var inCommonItems = Items.Where(i => otherPlaylist.Items.Contains(i));
+        var playlist1UniqueItems = Items.Where(i => !inCommonItems.Contains(i));
+        var playlist2UniqueItems = otherPlaylist.Items.Where(i => !inCommonItems.Contains(i));
+
+        return new ComparePlaylistsResultDto(
+            Playlist1UniqueItems: playlist1UniqueItems,
+            Playlist2UniqueItems: playlist2UniqueItems,
+            InCommonItems: inCommonItems
+        );
     }
 
     public static Playlist Parse(string playlistPath)
