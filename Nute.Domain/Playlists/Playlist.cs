@@ -7,10 +7,10 @@ public sealed class Playlist
 {
     public PlaylistPath Path { get; }
     public PlaylistType Type { get; }
-    public string Title { get; }
+    public PlaylistTitle Title { get; }
     public IEnumerable<PlaylistItem> Items { get; private set; }
 
-    public Playlist(PlaylistPath path, PlaylistType type, string title, IEnumerable<PlaylistItem> items)
+    public Playlist(PlaylistPath path, PlaylistType type, PlaylistTitle title, IEnumerable<PlaylistItem> items)
     {
         Path = path;
         Type = type;
@@ -101,6 +101,8 @@ public sealed class Playlist
 
     public static Playlist Parse(string playlistPath)
     {
+        var allPlaylistLines = File.ReadAllLines(playlistPath);
+
         var path = PlaylistPath.Parse(
             playlistPath: playlistPath
         );
@@ -109,10 +111,12 @@ public sealed class Playlist
             playlistPath: playlistPath
         );
 
-        var playlistLines = File.ReadAllLines(playlistPath);
-        var title = ExtractPlaylistTitle(playlistLines);
+        var title = PlaylistTitle.Parse(
+            playlistPath: playlistPath,
+            allPlaylistLines: allPlaylistLines
+        );
 
-        var itemsPaths = playlistLines[2..];
+        var itemsPaths = allPlaylistLines[2..];
         var items = new List<PlaylistItem>();
 
         for (var i = 0; i < itemsPaths.Length; i++)
@@ -130,13 +134,5 @@ public sealed class Playlist
             title: title,
             items: items
         );
-    }
-
-    private static string ExtractPlaylistTitle(string[] playlistLines)
-    {
-        var titleLine = playlistLines[1];
-        var lastIndexOfTag = titleLine.LastIndexOf(PLAYLIST_TYPE);
-        // TODO: Throw exception here
-        return titleLine[1..lastIndexOfTag];
     }
 }

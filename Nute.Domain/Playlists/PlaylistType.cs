@@ -32,4 +32,9 @@ public readonly struct PlaylistType
             throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
         }
     }
+
+    public static implicit operator string(PlaylistType playlistType)
+    {
+        return playlistType.ToString();
+    }
 }
