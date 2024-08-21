@@ -6,12 +6,14 @@ namespace Nute.Domain.Playlists;
 public sealed class Playlist
 {
     public PlaylistPath Path { get; }
+    public PlaylistType Type { get; }
     public string Title { get; }
     public IEnumerable<PlaylistItem> Items { get; private set; }
 
-    private Playlist(PlaylistPath path, string title, IEnumerable<PlaylistItem> items)
+    public Playlist(PlaylistPath path, PlaylistType type, string title, IEnumerable<PlaylistItem> items)
     {
         Path = path;
+        Type = type;
         Title = title;
         Items = items;
     }
@@ -99,6 +101,7 @@ public sealed class Playlist
 
     public static Playlist Parse(string playlistPath)
     {
+        var type = PlaylistType.Parse();
         var path = PlaylistPath.Parse(
             playlistPath: playlistPath
         );
@@ -120,6 +123,7 @@ public sealed class Playlist
 
         return new Playlist(
             path: path,
+            type: type,
             title: title,
             items: items
         );
@@ -135,4 +139,3 @@ public sealed class Playlist
         return titleLine[1..lastIndexOfTag];
     }
 }
-
