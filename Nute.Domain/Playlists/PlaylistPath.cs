@@ -20,5 +20,10 @@ public readonly struct PlaylistPath
             path: playlistPath
         );
     }
+
+    public static implicit operator string(PlaylistPath playlistPath)
+    {
+        return playlistPath.ToString();
+    }
 }
 

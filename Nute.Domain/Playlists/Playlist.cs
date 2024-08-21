@@ -82,7 +82,7 @@ public sealed class Playlist
             stringBuilder.AppendLine(item.Path);
         }
 
-        var destinationPath = destinationDirectoryPath is null ? Path.Value : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}.{Type}");
+        var destinationPath = destinationDirectoryPath is null ? Path : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}.{Type}");
         File.WriteAllText(destinationPath, stringBuilder.ToString());
     }
 
