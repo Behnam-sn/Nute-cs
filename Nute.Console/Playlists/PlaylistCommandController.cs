@@ -226,7 +226,7 @@ internal static class PlaylistCommandController
 
         try
         {
-            var result = PlaylistManagementService.Sort(playlistPath: playlistPath);
+            var result = PlaylistManagementService.SortSongs(playlistPath: playlistPath);
             result.PrintInConsole();
         }
         catch (Exception exception)

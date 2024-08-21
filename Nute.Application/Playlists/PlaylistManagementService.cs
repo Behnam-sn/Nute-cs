@@ -55,7 +55,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static SortPlaylistResultVm Sort(string playlistPath)
+    public static SortPlaylistResultVm SortSongs(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
         playlist.Sort();

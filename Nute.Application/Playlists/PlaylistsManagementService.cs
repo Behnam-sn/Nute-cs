@@ -47,7 +47,7 @@ public static class PlaylistsManagementService
     {
         return TemplateMethod(
             sourcePath: sourcePath,
-            selector: PlaylistManagementService.Sort
+            selector: PlaylistManagementService.SortSongs
         );
     }
 
