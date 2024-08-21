@@ -109,38 +109,22 @@ public sealed class Playlist
         var playlistLines = File.ReadAllLines(playlistPath);
         var title = ExtractPlaylistTitle(playlistLines);
 
-        var songsPaths = playlistLines[2..];
-        var songs = new List<PlaylistItem>();
+        var itemsPaths = playlistLines[2..];
+        var items = new List<PlaylistItem>();
 
-        for (var i = 0; i < songsPaths.Length; i++)
+        for (var i = 0; i < itemsPaths.Length; i++)
         {
-            var songPath = songsPaths[i];
-            Song? song = null;
-            try
-            {
-                song = Song.Parse(path: songPath);
-            }
-            catch (SongFileNotExistDomainException)
-            {
-            }
-            catch (SongFilePathIsInvalidDomainException)
-            {
-            }
-            finally
-            {
-                var playlistSong = new PlaylistItem(
-                    path: songPath,
-                    index: i,
-                    song: song
-                );
-                songs.Add(playlistSong);
-            }
+            var item = PlaylistItem.Parse(
+                path: itemsPaths[i],
+                index: i
+            );
+            items.Add(item);
         }
 
         return new Playlist(
             path: playlistPath,
             title: title,
-            items: songs
+            items: items
         );
     }
 
