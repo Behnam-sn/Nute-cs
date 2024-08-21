@@ -1,18 +1,15 @@
 using System.Text;
 using Nute.Domain.Playlists.Dtos;
-using Nute.Domain.Playlists.Exceptions;
 
 namespace Nute.Domain.Playlists;
 
 public sealed class Playlist
 {
-    private const string PLAYLIST_TYPE = ".m3u8";
-
-    public string Path { get; }
+    public PlaylistPath Path { get; }
     public string Title { get; }
     public IEnumerable<PlaylistItem> Items { get; private set; }
 
-    private Playlist(string path, string title, IEnumerable<PlaylistItem> items)
+    private Playlist(PlaylistPath path, string title, IEnumerable<PlaylistItem> items)
     {
         Path = path;
         Title = title;
@@ -75,7 +72,7 @@ public sealed class Playlist
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine("#EXTM3U");
-        stringBuilder.AppendLine($"#{Title}{PLAYLIST_TYPE}");
+        stringBuilder.AppendLine($"#{Title}{Path.Type}");
 
         var sortedItems = Items.OrderBy(i => i.Index);
         foreach (var item in sortedItems)
@@ -102,7 +99,9 @@ public sealed class Playlist
 
     public static Playlist Parse(string playlistPath)
     {
-        ValidatePlaylistPath(playlistPath);
+        var path = PlaylistPath.Parse(
+            playlistPath: playlistPath
+        );
 
         var playlistLines = File.ReadAllLines(playlistPath);
         var title = ExtractPlaylistTitle(playlistLines);
@@ -120,20 +119,13 @@ public sealed class Playlist
         }
 
         return new Playlist(
-            path: playlistPath,
+            path: path,
             title: title,
             items: items
         );
     }
 
-    private static void ValidatePlaylistPath(string playlistPath)
-    {
-        var fileExtension = System.IO.Path.GetExtension(playlistPath);
-        if (fileExtension is not PLAYLIST_TYPE)
-        {
-            throw new PlaylistTypeNotAcceptableDomainException($"{fileExtension} is Not a Acceptable Playlist Type.");
-        }
-    }
+
 
     private static string ExtractPlaylistTitle(string[] playlistLines)
     {
@@ -143,3 +135,4 @@ public sealed class Playlist
         return titleLine[1..lastIndexOfTag];
     }
 }
+
