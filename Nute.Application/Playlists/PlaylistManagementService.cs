@@ -63,7 +63,7 @@ public static class PlaylistManagementService
 
         return new SortPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            SortedSongs: playlist.Songs.Select(i => i.Path)
+            SortedSongs: playlist.Items.Select(i => i.Path)
         );
     }
 

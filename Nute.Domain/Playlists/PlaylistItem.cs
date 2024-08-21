@@ -2,13 +2,13 @@ using Nute.Domain.Songs;
 
 namespace Nute.Domain.Playlists;
 
-public sealed class PlaylistSong : IEquatable<PlaylistSong>
+public sealed class PlaylistItem : IEquatable<PlaylistItem>
 {
     public string Path { get; private set; }
     public int Index { get; private set; }
     public Song? Value { get; }
 
-    internal PlaylistSong(string path, int index, Song? song)
+    internal PlaylistItem(string path, int index, Song? song)
     {
         Path = path;
         Index = index;
@@ -25,7 +25,7 @@ public sealed class PlaylistSong : IEquatable<PlaylistSong>
         Path = newPath;
     }
 
-    public bool Equals(PlaylistSong? other)
+    public bool Equals(PlaylistItem? other)
     {
         if (other is null)
         {
@@ -52,7 +52,7 @@ public sealed class PlaylistSong : IEquatable<PlaylistSong>
             return false;
         }
 
-        if (obj is not PlaylistSong entity)
+        if (obj is not PlaylistItem entity)
         {
             return false;
         }

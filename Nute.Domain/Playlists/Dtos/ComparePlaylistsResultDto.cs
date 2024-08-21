@@ -1,7 +1,7 @@
 namespace Nute.Domain.Playlists.Dtos;
 
 public sealed record ComparePlaylistsResultDto(
-    IEnumerable<PlaylistSong> Playlist1UniqueSongs,
-    IEnumerable<PlaylistSong> Playlist2UniqueSongs,
-    IEnumerable<PlaylistSong> InCommonSongs
+    IEnumerable<PlaylistItem> Playlist1UniqueSongs,
+    IEnumerable<PlaylistItem> Playlist2UniqueSongs,
+    IEnumerable<PlaylistItem> InCommonSongs
 );

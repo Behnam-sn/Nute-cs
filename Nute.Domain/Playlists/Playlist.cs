@@ -12,31 +12,31 @@ public sealed class Playlist
 
     public string Path { get; }
     public string Title { get; }
-    public IEnumerable<PlaylistSong> Songs { get; private set; }
+    public IEnumerable<PlaylistItem> Items { get; private set; }
 
-    private Playlist(string path, string title, IEnumerable<PlaylistSong> songs)
+    private Playlist(string path, string title, IEnumerable<PlaylistItem> items)
     {
         Path = path;
         Title = title;
-        Songs = songs;
+        Items = items;
     }
 
-    public IEnumerable<PlaylistSong> GetNotFoundedSongs()
+    public IEnumerable<PlaylistItem> GetNotFoundedSongs()
     {
-        var notFoundedSongs = Songs.Where(i => i.Value is null);
+        var notFoundedSongs = Items.Where(i => i.Value is null);
         return notFoundedSongs;
     }
 
-    public IEnumerable<PlaylistSong> GetDuplicateSongs()
+    public IEnumerable<PlaylistItem> GetDuplicateSongs()
     {
         var uniqueSongs = new HashSet<string>();
-        var duplicateSongs = new List<PlaylistSong>();
+        var duplicateSongs = new List<PlaylistItem>();
 
-        foreach (var song in Songs)
+        foreach (var item in Items)
         {
-            if (uniqueSongs.Add(song.Path) is false)
+            if (!uniqueSongs.Add(item.Path))
             {
-                duplicateSongs.Add(song);
+                duplicateSongs.Add(item);
             }
         }
 
@@ -46,14 +46,14 @@ public sealed class Playlist
     public void RemoveDuplicateSongs()
     {
         var duplicateSongs = GetDuplicateSongs();
-        Songs = Songs.Where(i => !duplicateSongs.Contains(i));
+        Items = Items.Where(i => !duplicateSongs.Contains(i));
     }
 
     public ComparePlaylistsResultDto CompareTo(Playlist otherPlaylist)
     {
-        var inCommonSongs = Songs.Where(i => otherPlaylist.Songs.Contains(i));
-        var playlist1UniqueSongs = Songs.Where(i => !inCommonSongs.Contains(i));
-        var playlist2UniqueSongs = otherPlaylist.Songs.Where(i => !inCommonSongs.Contains(i));
+        var inCommonSongs = Items.Where(i => otherPlaylist.Items.Contains(i));
+        var playlist1UniqueSongs = Items.Where(i => !inCommonSongs.Contains(i));
+        var playlist2UniqueSongs = otherPlaylist.Items.Where(i => !inCommonSongs.Contains(i));
 
         return new ComparePlaylistsResultDto(
             Playlist1UniqueSongs: playlist1UniqueSongs,
@@ -64,18 +64,18 @@ public sealed class Playlist
 
     public void Sort()
     {
-        Songs = Songs.OrderBy(i => i.Value);
+        Items = Items.OrderBy(i => i.Value);
         var index = 0;
-        foreach (var song in Songs)
+        foreach (var item in Items)
         {
-            song.UpdateIndex(newIndex: index);
+            item.UpdateIndex(newIndex: index);
             index++;
         }
     }
 
     public void UpdateSongsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
     {
-        foreach (var song in Songs)
+        foreach (var song in Items)
         {
             var newPath = song.Path.Replace(oldBasePath, newBasePath);
             if (isNewBasePathLinuxBased)
@@ -93,7 +93,7 @@ public sealed class Playlist
         stringBuilder.AppendLine("#EXTM3U");
         stringBuilder.AppendLine($"#{Title}{PLAYLIST_TYPE}");
 
-        var sortedSongs = Songs.OrderBy(i => i.Index);
+        var sortedSongs = Items.OrderBy(i => i.Index);
         foreach (var song in sortedSongs)
         {
             stringBuilder.AppendLine(song.Path);
@@ -111,7 +111,7 @@ public sealed class Playlist
         var title = ExtractPlaylistTitle(playlistLines);
 
         var songsPaths = playlistLines[2..];
-        var songs = new List<PlaylistSong>();
+        var songs = new List<PlaylistItem>();
 
         for (var i = 0; i < songsPaths.Length; i++)
         {
@@ -129,7 +129,7 @@ public sealed class Playlist
             }
             finally
             {
-                var playlistSong = new PlaylistSong(
+                var playlistSong = new PlaylistItem(
                     path: songPath,
                     index: i,
                     song: song
@@ -141,7 +141,7 @@ public sealed class Playlist
         return new Playlist(
             path: playlistPath,
             title: title,
-            songs: songs
+            items: songs
         );
     }
 
