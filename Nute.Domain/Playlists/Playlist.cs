@@ -23,7 +23,7 @@ public sealed class Playlist
 
     public IEnumerable<PlaylistItem> GetNotFoundedSongs()
     {
-        var notFoundedSongs = Items.Where(i => i.Value is null);
+        var notFoundedSongs = Items.Where(i => i.Song is null);
         return notFoundedSongs;
     }
 
@@ -64,7 +64,7 @@ public sealed class Playlist
 
     public void Sort()
     {
-        Items = Items.OrderBy(i => i.Value);
+        Items = Items.OrderBy(i => i.Song);
         var index = 0;
         foreach (var item in Items)
         {

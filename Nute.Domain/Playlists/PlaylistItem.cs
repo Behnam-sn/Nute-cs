@@ -6,23 +6,23 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
 {
     public string Path { get; private set; }
     public int Index { get; private set; }
-    public Song? Value { get; }
+    public Song? Song { get; }
 
     internal PlaylistItem(string path, int index, Song? song)
     {
         Path = path;
         Index = index;
-        Value = song;
-    }
-
-    internal void UpdateIndex(int newIndex)
-    {
-        Index = newIndex;
+        Song = song;
     }
 
     internal void UpdatePath(string newPath)
     {
         Path = newPath;
+    }
+
+    internal void UpdateIndex(int newIndex)
+    {
+        Index = newIndex;
     }
 
     public bool Equals(PlaylistItem? other)
