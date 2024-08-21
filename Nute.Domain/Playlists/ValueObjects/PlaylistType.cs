@@ -1,3 +1,4 @@
+using Nute.Domain.Playlists.Enums;
 using Nute.Domain.Playlists.Exceptions;
 
 namespace Nute.Domain.Playlists.ValueObjects;

@@ -1,4 +1,4 @@
-namespace Nute.Domain.Playlists;
+namespace Nute.Domain.Playlists.Enums;
 
 public enum PlaylistTypes
 {
