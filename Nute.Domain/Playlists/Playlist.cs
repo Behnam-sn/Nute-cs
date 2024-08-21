@@ -59,11 +59,11 @@ public sealed class Playlist
         }
     }
 
-    public void UpdateItemsBasePath(string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased)
+    public void UpdateItemsBasePath(string currentBasePath, string newBasePath, bool isNewBasePathLinuxBased)
     {
         foreach (var item in Items)
         {
-            var newPath = item.Path.Replace(oldBasePath, newBasePath);
+            var newPath = item.Path.Replace(currentBasePath, newBasePath);
             if (isNewBasePathLinuxBased)
             {
                 newPath = newPath.Replace("\\", "/");

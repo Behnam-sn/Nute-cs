@@ -71,7 +71,7 @@ public static class PlaylistManagementService
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
         playlist.UpdateItemsBasePath(
-            oldBasePath: oldBasePath,
+            currentBasePath: oldBasePath,
             newBasePath: newBasePath,
             isNewBasePathLinuxBased: isNewBasePathLinuxBased
         );
