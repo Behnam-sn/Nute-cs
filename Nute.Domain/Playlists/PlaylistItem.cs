@@ -1,4 +1,5 @@
 using Nute.Domain.Songs;
+using Nute.Domain.Songs.Exceptions;
 
 namespace Nute.Domain.Playlists;
 
@@ -8,7 +9,7 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
     public int Index { get; private set; }
     public Song? Song { get; }
 
-    internal PlaylistItem(string path, int index, Song? song)
+    private PlaylistItem(string path, int index, Song? song)
     {
         Path = path;
         Index = index;
@@ -63,5 +64,26 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
     public override int GetHashCode()
     {
         return Path.GetHashCode();
+    }
+
+    internal static PlaylistItem Parse(string path, int index)
+    {
+        Song? song = null;
+        try
+        {
+            song = Song.Parse(path: path);
+        }
+        catch (SongFileNotExistDomainException)
+        {
+        }
+        catch (SongFilePathIsInvalidDomainException)
+        {
+        }
+
+        return new PlaylistItem(
+            path: path,
+            index: index,
+            song: song
+        );
     }
 }
