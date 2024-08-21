@@ -1,7 +1,7 @@
 using Nute.Domain.Songs;
 using Nute.Domain.Songs.Exceptions;
 
-namespace Nute.Domain.Playlists;
+namespace Nute.Domain.Playlists.Entities;
 
 public sealed class PlaylistItem : IEquatable<PlaylistItem>
 {

@@ -1,3 +1,5 @@
+using Nute.Domain.Playlists.Entities;
+
 namespace Nute.Domain.Playlists.Dtos;
 
 public sealed record ComparePlaylistsResultDto(
