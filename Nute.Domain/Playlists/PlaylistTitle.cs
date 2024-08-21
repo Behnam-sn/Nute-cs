@@ -30,4 +30,9 @@ public readonly struct PlaylistTitle
             value: fileName
         );
     }
+
+    public static implicit operator string(PlaylistTitle playlistTitle)
+    {
+        return playlistTitle.ToString();
+    }
 }
