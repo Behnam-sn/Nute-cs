@@ -12,7 +12,7 @@ public sealed class Playlist
     public PlaylistTitle Title { get; }
     public IEnumerable<PlaylistItem> Items { get; private set; }
 
-    public Playlist(PlaylistPath path, PlaylistType type, PlaylistTitle title, IEnumerable<PlaylistItem> items)
+    private Playlist(PlaylistPath path, PlaylistType type, PlaylistTitle title, IEnumerable<PlaylistItem> items)
     {
         Path = path;
         Type = type;

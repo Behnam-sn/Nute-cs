@@ -71,7 +71,9 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
         Song? song = null;
         try
         {
-            song = Song.Parse(path: path);
+            song = Song.Parse(
+                path: path
+            );
         }
         catch (SongFileNotExistDomainException)
         {
