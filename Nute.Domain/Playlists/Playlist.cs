@@ -1,8 +1,6 @@
 using System.Text;
 using Nute.Domain.Playlists.Dtos;
 using Nute.Domain.Playlists.Exceptions;
-using Nute.Domain.Songs;
-using Nute.Domain.Songs.Exceptions;
 
 namespace Nute.Domain.Playlists;
 
