@@ -5,20 +5,44 @@ namespace Nute.Domain.Playlists.Entities;
 
 public sealed class PlaylistItem : IEquatable<PlaylistItem>
 {
+    private Lazy<Song?> _song;
+
     public string Path { get; private set; }
     public int Index { get; private set; }
-    public Song? Song { get; }
+    public Song? Song => _song.Value;
 
-    private PlaylistItem(string path, int index, Song? song)
+    private PlaylistItem(string path, int index)
     {
         Path = path;
         Index = index;
-        Song = song;
+        _song = InitializeSong();
+    }
+
+    private Lazy<Song?> InitializeSong()
+    {
+        return new Lazy<Song?>(
+            () =>
+            {
+                try
+                {
+                    return Song.Parse(path: Path);
+                }
+                catch (SongFileNotExistDomainException)
+                {
+                    return null;
+                }
+                catch (SongFilePathIsInvalidDomainException)
+                {
+                    return null;
+                }
+            }
+       );
     }
 
     internal void UpdatePath(string newPath)
     {
         Path = newPath;
+        _song = InitializeSong();
     }
 
     internal void UpdateIndex(int newIndex)
@@ -68,24 +92,9 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
 
     internal static PlaylistItem Parse(string path, int index)
     {
-        Song? song = null;
-        try
-        {
-            song = Song.Parse(
-                path: path
-            );
-        }
-        catch (SongFileNotExistDomainException)
-        {
-        }
-        catch (SongFilePathIsInvalidDomainException)
-        {
-        }
-
         return new PlaylistItem(
             path: path,
-            index: index,
-            song: song
+            index: index
         );
     }
 }
