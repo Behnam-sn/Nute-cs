@@ -97,5 +97,74 @@ public static class PlaylistManagementService
         );
     }
 
+    private static IEnumerable<T> TemplateMethod<T>(string sourcePath, Func<string, T> selector)
+    {
+        ValidateSourcePath(sourcePath: sourcePath);
+        var playlists = Directory.EnumerateFiles(sourcePath, "*.m3u8");
+        return playlists.Select(selector);
+    }
+
+    private static void ValidateSourcePath(string sourcePath)
+    {
+        if (!Directory.Exists(sourcePath))
+        {
+            throw new Exception($"{sourcePath} doesn't exists.");
+        }
+    }
+
+    public static IEnumerable<GetNotFoundedSongsInPlaylistResultVm> GetNotFoundedSongsInAllPlaylist(string sourcePath)
+    {
+        return TemplateMethod(
+            sourcePath: sourcePath,
+            selector: GetNotFoundedSongsInPlaylist
+        );
+    }
+
+    public static IEnumerable<GetDuplicateSongsInPlaylistResultVm> GetDuplicateSongsInAllPlaylist(string sourcePath)
+    {
+        return TemplateMethod(
+            sourcePath: sourcePath,
+            selector: GetDuplicateSongsInPlaylist
+        );
+    }
+
+    public static IEnumerable<RemoveDuplicateSongsInPlaylistResultVm> RemoveDuplicateSongsInAllPlaylist(string sourcePath)
+    {
+        return TemplateMethod(
+            sourcePath: sourcePath,
+            selector: RemoveDuplicateSongsInPlaylist
+        );
+    }
+
+    public static IEnumerable<SortPlaylistResultVm> SortSongsInAllPlaylist(string sourcePath)
+    {
+        return TemplateMethod(
+            sourcePath: sourcePath,
+            selector: SortSongsInPlaylist
+        );
+    }
+
+    public static IEnumerable<UpdateSongsPathResultVm> ChangeSongsBasePathInAllPlaylist(
+        string sourcePath,
+        string currentBasePath,
+        string currentBasePathType,
+        string newBasePath,
+        string newBasePathType,
+        string destinationDirectoryPath
+    )
+    {
+        return TemplateMethod(
+            sourcePath: sourcePath,
+            selector: i => ChangeSongsBasePathInPlaylist(
+                playlistPath: i,
+                currentBasePath: currentBasePath,
+                currentBasePathType: currentBasePathType,
+                newBasePath: newBasePath,
+                newBasePathType: newBasePathType,
+                destinationDirectoryPath: destinationDirectoryPath
+            )
+        );
+    }
+
     #endregion
 }
