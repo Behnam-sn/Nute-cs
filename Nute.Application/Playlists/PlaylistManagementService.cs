@@ -1,11 +1,14 @@
 using Nute.Application.Playlists.Vms;
 using Nute.Domain.Playlists;
+using Nute.Domain.Playlists.Enums;
 
 namespace Nute.Application.Playlists;
 
 public static class PlaylistManagementService
 {
-    public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongs(string playlistPath)
+    #region Single Playlist Management
+
+    public static GetNotFoundedSongsInPlaylistResultVm GetNotFoundedSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
         var notFoundedSongs = playlist.GetNotFoundedItems();
@@ -16,7 +19,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongs(string playlistPath)
+    public static GetDuplicateSongsInPlaylistResultVm GetDuplicateSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
         var duplicateSongs = playlist.GetDuplicateItems();
@@ -27,7 +30,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongs(string playlistPath)
+    public static RemoveDuplicateSongsInPlaylistResultVm RemoveDuplicateSongsInPlaylist(string playlistPath)
     {
         var playlist = Playlist.Parse(playlistPath: playlistPath);
         var duplicateSongs = playlist.GetDuplicateItems();
@@ -40,7 +43,46 @@ public static class PlaylistManagementService
         );
     }
 
-    public static ComparePlaylistsResultVm Compare(string playlist1Path, string playlist2Path)
+    public static SortPlaylistResultVm SortSongsInPlaylist(string playlistPath)
+    {
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
+        playlist.SortItems();
+        playlist.Save();
+
+        return new SortPlaylistResultVm(
+            PlaylistTitle: playlist.Title,
+            SortedSongs: playlist.Items.Select(i => i.Path)
+        );
+    }
+
+    public static UpdateSongsPathResultVm ChangeSongsBasePathInPlaylist(
+        string playlistPath,
+        string currentBasePath,
+        string currentBasePathType,
+        string newBasePath,
+        string newBasePathType,
+        string destinationDirectoryPath
+    )
+    {
+        var playlist = Playlist.Parse(playlistPath: playlistPath);
+        playlist.UpdateItemsBasePath(
+            currentBasePath: currentBasePath,
+            currentBasePathType: Enum.Parse<PathTypes>(currentBasePathType),
+            newBasePath: newBasePath,
+            newBasePathType: Enum.Parse<PathTypes>(newBasePathType)
+        );
+        playlist.Save(destinationDirectoryPath: destinationDirectoryPath);
+
+        return new UpdateSongsPathResultVm(
+            PlaylistTitle: playlist.Title
+        );
+    }
+
+    #endregion
+
+    #region Multiple Playlist Management
+
+    public static ComparePlaylistsResultVm ComparePlaylists(string playlist1Path, string playlist2Path)
     {
         var playlist1 = Playlist.Parse(playlistPath: playlist1Path);
         var playlist2 = Playlist.Parse(playlistPath: playlist2Path);
@@ -55,30 +97,5 @@ public static class PlaylistManagementService
         );
     }
 
-    public static SortPlaylistResultVm SortSongs(string playlistPath)
-    {
-        var playlist = Playlist.Parse(playlistPath: playlistPath);
-        playlist.SortItems();
-        playlist.Save();
-
-        return new SortPlaylistResultVm(
-            PlaylistTitle: playlist.Title,
-            SortedSongs: playlist.Items.Select(i => i.Path)
-        );
-    }
-
-    public static UpdateSongsPathResultVm UpdateSongsBasePath(string playlistPath, string oldBasePath, string newBasePath, bool isNewBasePathLinuxBased, string destinationDirectoryPath)
-    {
-        var playlist = Playlist.Parse(playlistPath: playlistPath);
-        playlist.UpdateItemsBasePath(
-            currentBasePath: oldBasePath,
-            newBasePath: newBasePath,
-            isNewBasePathLinuxBased: isNewBasePathLinuxBased
-        );
-        playlist.Save(destinationDirectoryPath: destinationDirectoryPath);
-
-        return new UpdateSongsPathResultVm(
-            PlaylistTitle: playlist.Title
-        );
-    }
+    #endregion
 }
