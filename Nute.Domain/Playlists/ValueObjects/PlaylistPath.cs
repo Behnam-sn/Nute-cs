@@ -16,6 +16,11 @@ public readonly struct PlaylistPath
 
     internal static PlaylistPath Parse(string playlistPath)
     {
+        if (!File.Exists(playlistPath))
+        {
+            throw new FileNotFoundException($"{playlistPath} Not Founded.");
+        }
+
         return new PlaylistPath(
             value: playlistPath
         );
