@@ -4,6 +4,13 @@ internal static class Program
 {
     private static void Main(string[] args)
     {
-        NuteCommandController.Run();
+        try
+        {
+            NuteCommandController.Run();
+        }
+        catch (Exception exception)
+        {
+            System.Console.WriteLine(exception.Message);
+        }
     }
 }
