@@ -1,6 +1,7 @@
 using System.Text;
 using Nute.Domain.Playlists.Dtos;
 using Nute.Domain.Playlists.Entities;
+using Nute.Domain.Playlists.Enums;
 using Nute.Domain.Playlists.ValueObjects;
 
 namespace Nute.Domain.Playlists;
@@ -58,15 +59,21 @@ public sealed class Playlist
         }
     }
 
-    public void UpdateItemsBasePath(string currentBasePath, string newBasePath, bool isNewBasePathLinuxBased)
+    public void UpdateItemsBasePath(string currentBasePath, PathTypes currentBasePathType, string newBasePath, PathTypes newBasePathType)
     {
         foreach (var item in Items)
         {
             var newPath = item.Path.Replace(currentBasePath, newBasePath);
-            if (isNewBasePathLinuxBased)
+
+            if ((currentBasePathType is PathTypes.Windows) && (newBasePathType is PathTypes.Linux))
             {
                 newPath = newPath.Replace("\\", "/");
             }
+            else if ((currentBasePathType is PathTypes.Linux) && (newBasePathType is PathTypes.Windows))
+            {
+                newPath = newPath.Replace("/", "\\");
+            }
+
             item.UpdatePath(newPath: newPath);
         }
     }
