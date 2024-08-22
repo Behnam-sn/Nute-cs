@@ -15,6 +15,14 @@ internal static class VmHelpers
         System.Console.WriteLine("");
     }
 
+    internal static void PrintInConsole(this IEnumerable<GetNotFoundedSongsInPlaylistResultVm> vms)
+    {
+        foreach (var vm in vms)
+        {
+            vm.PrintInConsole();
+        }
+    }
+
     internal static void PrintInConsole(this GetDuplicateSongsInPlaylistResultVm vm)
     {
         System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
@@ -26,6 +34,14 @@ internal static class VmHelpers
         System.Console.WriteLine("");
     }
 
+    internal static void PrintInConsole(this IEnumerable<GetDuplicateSongsInPlaylistResultVm> vms)
+    {
+        foreach (var vm in vms)
+        {
+            vm.PrintInConsole();
+        }
+    }
+
     internal static void PrintInConsole(this RemoveDuplicateSongsInPlaylistResultVm vm)
     {
         System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
@@ -35,6 +51,14 @@ internal static class VmHelpers
             System.Console.WriteLine(song);
         }
         System.Console.WriteLine("");
+    }
+
+    internal static void PrintInConsole(this IEnumerable<RemoveDuplicateSongsInPlaylistResultVm> vms)
+    {
+        foreach (var vm in vms)
+        {
+            vm.PrintInConsole();
+        }
     }
 
     internal static void PrintInConsole(this ComparePlaylistsResultVm vm)
@@ -63,6 +87,15 @@ internal static class VmHelpers
         System.Console.WriteLine("");
     }
 
+    internal static void PrintInConsole(this IEnumerable<ComparePlaylistsResultVm> vms)
+    {
+        foreach (var vm in vms)
+        {
+            vm.PrintInConsole();
+        }
+    }
+
+
     internal static void PrintInConsole(this SortPlaylistResultVm vm)
     {
         System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
@@ -74,8 +107,24 @@ internal static class VmHelpers
         System.Console.WriteLine("");
     }
 
+    internal static void PrintInConsole(this IEnumerable<SortPlaylistResultVm> vms)
+    {
+        foreach (var vm in vms)
+        {
+            vm.PrintInConsole();
+        }
+    }
+
     internal static void PrintInConsole(this UpdateSongsPathResultVm vm)
     {
         System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
+    }
+
+    internal static void PrintInConsole(this IEnumerable<UpdateSongsPathResultVm> vms)
+    {
+        foreach (var vm in vms)
+        {
+            vm.PrintInConsole();
+        }
     }
 }
