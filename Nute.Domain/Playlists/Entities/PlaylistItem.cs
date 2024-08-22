@@ -63,7 +63,7 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
 
     public override int GetHashCode()
     {
-        return Path.GetHashCode();
+        return $"{Path}{Index}".GetHashCode();
     }
 
     internal static PlaylistItem Parse(string path, int index)
