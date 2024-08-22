@@ -21,8 +21,12 @@ internal static class NuteCommandController
                 case "exit" or "e":
                     return;
 
-                case "playlist" or "p":
-                    Playlist();
+                case "single playlist management" or "spm":
+                    SinglePlaylistManagement();
+                    break;
+
+                case "multiple playlist management" or "mpm":
+                    MultiplePlaylistManagement();
                     break;
 
                 case "song" or "s":
@@ -36,13 +40,19 @@ internal static class NuteCommandController
     {
         System.Console.WriteLine("Help or h");
         System.Console.WriteLine("Exit or e");
-        System.Console.WriteLine("Playlist or p");
+        System.Console.WriteLine("Single Playlist Management or spm");
+        System.Console.WriteLine("Multiple Playlist Management or spm");
         System.Console.WriteLine("Song or s");
     }
 
-    private static void Playlist()
+    private static void SinglePlaylistManagement()
     {
-        PlaylistCommandController.Run();
+        SinglePlaylistCommandController.Run();
+    }
+
+    private static void MultiplePlaylistManagement()
+    {
+        MultiplePlaylistCommandController.Run();
     }
 
     private static void Song()
