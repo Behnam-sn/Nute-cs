@@ -7,14 +7,14 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
 {
     private Lazy<Song?> _song;
 
-    public string Path { get; private set; }
     public int Index { get; private set; }
+    public string SongPath { get; private set; }
     public Song? Song => _song.Value;
 
-    private PlaylistItem(string path, int index)
+    private PlaylistItem(int index, string songPath)
     {
-        Path = path;
         Index = index;
+        SongPath = songPath;
         _song = InitializeSong();
     }
 
@@ -25,7 +25,7 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
             {
                 try
                 {
-                    return Song.Parse(path: Path);
+                    return Song.Parse(path: SongPath);
                 }
                 catch (SongFileNotExistDomainException)
                 {
@@ -39,15 +39,15 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
        );
     }
 
-    internal void UpdatePath(string newPath)
-    {
-        Path = newPath;
-        _song = InitializeSong();
-    }
-
     internal void UpdateIndex(int newIndex)
     {
         Index = newIndex;
+    }
+
+    internal void UpdateSongPath(string newSongPath)
+    {
+        SongPath = newSongPath;
+        _song = InitializeSong();
     }
 
     public bool Equals(PlaylistItem? other)
@@ -62,7 +62,7 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
             return false;
         }
 
-        return other.Path == Path;
+        return other.SongPath == SongPath;
     }
 
     public override bool Equals(object? obj)
@@ -82,19 +82,19 @@ public sealed class PlaylistItem : IEquatable<PlaylistItem>
             return false;
         }
 
-        return entity.Path == Path;
+        return entity.SongPath == SongPath;
     }
 
     public override int GetHashCode()
     {
-        return $"{Path}{Index}".GetHashCode();
+        return $"{Index}{SongPath}".GetHashCode();
     }
 
-    internal static PlaylistItem Parse(string path, int index)
+    internal static PlaylistItem Parse(int index, string songPath)
     {
         return new PlaylistItem(
-            path: path,
-            index: index
+            index: index,
+            songPath: songPath
         );
     }
 }

@@ -15,7 +15,7 @@ public static class PlaylistManagementService
 
         return new GetNotFoundedSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            NotFoundedSongs: notFoundedSongs.Select(i => i.Path)
+            NotFoundedSongs: notFoundedSongs.Select(i => i.SongPath)
         );
     }
 
@@ -26,7 +26,7 @@ public static class PlaylistManagementService
 
         return new GetDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: duplicateSongs.Select(i => i.Path)
+            DuplicateSongs: duplicateSongs.Select(i => i.SongPath)
         );
     }
 
@@ -39,7 +39,7 @@ public static class PlaylistManagementService
 
         return new RemoveDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: duplicateSongs.Select(i => i.Path)
+            DuplicateSongs: duplicateSongs.Select(i => i.SongPath)
         );
     }
 
@@ -51,7 +51,7 @@ public static class PlaylistManagementService
 
         return new SortPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            SortedSongs: playlist.Items.Select(i => i.Path)
+            SortedSongs: playlist.Items.Select(i => i.SongPath)
         );
     }
 
@@ -90,10 +90,10 @@ public static class PlaylistManagementService
 
         return new ComparePlaylistsResultVm(
             Playlist1Title: playlist1.Title,
-            Playlist1Songs: result.Playlist1UniqueItems.Select(i => i.Path),
+            Playlist1Songs: result.Playlist1UniqueItems.Select(i => i.SongPath),
             Playlist2Title: playlist2.Title,
-            Playlist2Songs: result.Playlist2UniqueItems.Select(i => i.Path),
-            InCommonSongs: result.InCommonItems.Select(i => i.Path)
+            Playlist2Songs: result.Playlist2UniqueItems.Select(i => i.SongPath),
+            InCommonSongs: result.InCommonItems.Select(i => i.SongPath)
         );
     }
 
@@ -155,8 +155,8 @@ public static class PlaylistManagementService
     {
         return TemplateMethod(
             sourcePath: sourcePath,
-            selector: i => ChangeSongsBasePathInPlaylist(
-                playlistPath: i,
+            selector: playlistPath => ChangeSongsBasePathInPlaylist(
+                playlistPath: playlistPath,
                 currentBasePath: currentBasePath,
                 currentBasePathType: currentBasePathType,
                 newBasePath: newBasePath,

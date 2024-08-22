@@ -33,7 +33,7 @@ public sealed class Playlist
 
         foreach (var item in Items)
         {
-            if (!uniqueItems.Add(item.Path))
+            if (!uniqueItems.Add(item.SongPath))
             {
                 duplicateItems.Add(item);
             }
@@ -63,18 +63,18 @@ public sealed class Playlist
     {
         foreach (var item in Items)
         {
-            var newPath = item.Path.Replace(currentBasePath, newBasePath);
+            var newSongPath = item.SongPath.Replace(currentBasePath, newBasePath);
 
             if ((currentBasePathType is PathTypes.Windows) && (newBasePathType is PathTypes.Linux))
             {
-                newPath = newPath.Replace("\\", "/");
+                newSongPath = newSongPath.Replace("\\", "/");
             }
             else if ((currentBasePathType is PathTypes.Linux) && (newBasePathType is PathTypes.Windows))
             {
-                newPath = newPath.Replace("/", "\\");
+                newSongPath = newSongPath.Replace("/", "\\");
             }
 
-            item.UpdatePath(newPath: newPath);
+            item.UpdateSongPath(newSongPath: newSongPath);
         }
     }
 
@@ -88,7 +88,7 @@ public sealed class Playlist
         var sortedItems = Items.OrderBy(i => i.Index);
         foreach (var item in sortedItems)
         {
-            stringBuilder.AppendLine(item.Path);
+            stringBuilder.AppendLine(item.SongPath);
         }
 
         var destinationPath = destinationDirectoryPath is null ? Path : System.IO.Path.Combine(destinationDirectoryPath, $"{Title}.{Type}");
@@ -128,11 +128,11 @@ public sealed class Playlist
         var itemsPaths = allPlaylistLines[2..];
         var items = new List<PlaylistItem>();
 
-        for (var i = 0; i < itemsPaths.Length; i++)
+        for (var index = 0; index < itemsPaths.Length; index++)
         {
             var item = PlaylistItem.Parse(
-                path: itemsPaths[i],
-                index: i
+                index: index,
+                songPath: itemsPaths[index]
             );
             items.Add(item);
         }
