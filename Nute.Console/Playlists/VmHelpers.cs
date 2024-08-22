@@ -6,13 +6,16 @@ internal static class VmHelpers
 {
     internal static void PrintInConsole(this GetNotFoundedSongsInPlaylistResultVm vm)
     {
-        System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
-        System.Console.WriteLine("Not Founded Songs:");
-        foreach (var song in vm.NotFoundedSongs)
+        if (vm.NotFoundedSongs.Any())
         {
-            System.Console.WriteLine(song);
+            System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
+            System.Console.WriteLine("Not Founded Songs:");
+            foreach (var song in vm.NotFoundedSongs)
+            {
+                System.Console.WriteLine(song);
+            }
+            System.Console.WriteLine("");
         }
-        System.Console.WriteLine("");
     }
 
     internal static void PrintInConsole(this IEnumerable<GetNotFoundedSongsInPlaylistResultVm> vms)
@@ -25,13 +28,16 @@ internal static class VmHelpers
 
     internal static void PrintInConsole(this GetDuplicateSongsInPlaylistResultVm vm)
     {
-        System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
-        System.Console.WriteLine("Duplicate Songs:");
-        foreach (var song in vm.DuplicateSongs)
+        if (vm.DuplicateSongs.Any())
         {
-            System.Console.WriteLine(song);
+            System.Console.WriteLine($"Playlist Title: {vm.PlaylistTitle}");
+            System.Console.WriteLine("Duplicate Songs:");
+            foreach (var song in vm.DuplicateSongs)
+            {
+                System.Console.WriteLine(song);
+            }
+            System.Console.WriteLine("");
         }
-        System.Console.WriteLine("");
     }
 
     internal static void PrintInConsole(this IEnumerable<GetDuplicateSongsInPlaylistResultVm> vms)
