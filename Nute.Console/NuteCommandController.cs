@@ -41,7 +41,7 @@ internal static class NuteCommandController
         System.Console.WriteLine("Help or h");
         System.Console.WriteLine("Exit or e");
         System.Console.WriteLine("Single Playlist Management or spm");
-        System.Console.WriteLine("Multiple Playlist Management or spm");
+        System.Console.WriteLine("Multiple Playlist Management or mpm");
         System.Console.WriteLine("Song or s");
     }
 
