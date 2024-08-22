@@ -97,6 +97,14 @@ public static class PlaylistManagementService
         );
     }
 
+    private static void ValidateSourcePath(string sourcePath)
+    {
+        if (!Directory.Exists(sourcePath))
+        {
+            throw new DirectoryNotFoundException($"{sourcePath} doesn't exists.");
+        }
+    }
+
     private static IEnumerable<T> TemplateMethod<T>(string sourcePath, Func<string, T> selector)
     {
         ValidateSourcePath(sourcePath: sourcePath);
@@ -104,15 +112,7 @@ public static class PlaylistManagementService
         return playlists.Select(selector);
     }
 
-    private static void ValidateSourcePath(string sourcePath)
-    {
-        if (!Directory.Exists(sourcePath))
-        {
-            throw new Exception($"{sourcePath} doesn't exists.");
-        }
-    }
-
-    public static IEnumerable<GetNotFoundedSongsInPlaylistResultVm> GetNotFoundedSongsInAllPlaylist(string sourcePath)
+    public static IEnumerable<GetNotFoundedSongsInPlaylistResultVm> GetNotFoundedSongsInAllPlaylists(string sourcePath)
     {
         return TemplateMethod(
             sourcePath: sourcePath,
@@ -120,7 +120,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static IEnumerable<GetDuplicateSongsInPlaylistResultVm> GetDuplicateSongsInAllPlaylist(string sourcePath)
+    public static IEnumerable<GetDuplicateSongsInPlaylistResultVm> GetDuplicateSongsInAllPlaylists(string sourcePath)
     {
         return TemplateMethod(
             sourcePath: sourcePath,
@@ -128,7 +128,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static IEnumerable<RemoveDuplicateSongsInPlaylistResultVm> RemoveDuplicateSongsInAllPlaylist(string sourcePath)
+    public static IEnumerable<RemoveDuplicateSongsInPlaylistResultVm> RemoveDuplicateSongsInAllPlaylists(string sourcePath)
     {
         return TemplateMethod(
             sourcePath: sourcePath,
@@ -136,7 +136,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static IEnumerable<SortPlaylistResultVm> SortSongsInAllPlaylist(string sourcePath)
+    public static IEnumerable<SortPlaylistResultVm> SortSongsInAllPlaylists(string sourcePath)
     {
         return TemplateMethod(
             sourcePath: sourcePath,
@@ -144,7 +144,7 @@ public static class PlaylistManagementService
         );
     }
 
-    public static IEnumerable<UpdateSongsPathResultVm> ChangeSongsBasePathInAllPlaylist(
+    public static IEnumerable<UpdateSongsPathResultVm> ChangeSongsBasePathInAllPlaylists(
         string sourcePath,
         string currentBasePath,
         string currentBasePathType,
