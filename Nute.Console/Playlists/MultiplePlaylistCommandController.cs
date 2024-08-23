@@ -4,6 +4,12 @@ namespace Nute.Console.Playlists;
 
 internal static class MultiplePlaylistCommandController
 {
+    private static readonly List<Command> availableCommands =
+    [
+        new(["Help", "H"], PrintCommands),
+        new(["Get All Not Founded Songs", "GANFS"], GetNotFoundedSongsInAllPlaylists)
+    ];
+
     internal static void Run()
     {
         while (true)
@@ -11,39 +17,47 @@ internal static class MultiplePlaylistCommandController
             System.Console.Write("Playlist Command: ");
             var command = System.Console.ReadLine()?.ToLower();
 
-            switch (command)
-            {
-                case "help" or "h":
-                    PrintCommands();
-                    break;
+            availableCommands
+                .FirstOrDefault(
+                    i => i.Commands.Any(
+                        j => j.Equals(command, StringComparison.CurrentCultureIgnoreCase)
+                    )
+                )
+                ?.Action();
 
-                case "exit" or "e":
-                    return;
+            // switch (command)
+            // {
+            //     case "help" or "h":
+            //         PrintCommands();
+            //         break;
 
-                case "get all not founded songs" or "ganfs":
-                    GetNotFoundedSongsInAllPlaylists();
-                    break;
+            //     case "exit" or "e":
+            //         return;
 
-                case "get all duplicate songs" or "gads":
-                    GetDuplicateSongsInAllPlaylists();
-                    break;
+            //     case "get all not founded songs" or "ganfs":
+            //         GetNotFoundedSongsInAllPlaylists();
+            //         break;
 
-                case "remove all duplicate songs" or "rads":
-                    RemoveDuplicateSongsInAllPlaylists();
-                    break;
+            //     case "get all duplicate songs" or "gads":
+            //         GetDuplicateSongsInAllPlaylists();
+            //         break;
 
-                case "sort all song" or "sas":
-                    SortSongsInAllPlaylists();
-                    break;
+            //     case "remove all duplicate songs" or "rads":
+            //         RemoveDuplicateSongsInAllPlaylists();
+            //         break;
 
-                case "change all songs base path" or "casbp":
-                    ChangeSongsBasePathInAllPlaylists();
-                    break;
+            //     case "sort all song" or "sas":
+            //         SortSongsInAllPlaylists();
+            //         break;
 
-                case "compare playlists" or "cp":
-                    ComparePlaylists();
-                    break;
-            }
+            //     case "change all songs base path" or "casbp":
+            //         ChangeSongsBasePathInAllPlaylists();
+            //         break;
+
+            //     case "compare playlists" or "cp":
+            //         ComparePlaylists();
+            //         break;
+            // }
         }
     }
 
