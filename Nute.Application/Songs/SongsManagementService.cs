@@ -6,79 +6,96 @@ namespace Nute.Application.Songs;
 
 public static class SongsManagementService
 {
-    public static CompareSongsResultVm CompareAllSongs(string sourcePath, string destinationPath)
+    public static CompareSongsResultVm CompareAllSongs(string directoryPath, string otherDirectoryPath)
     {
-        // loop trough source path
-        // if it's a directory
-        // call SpecialMethod with new sourcePath and destinationPath
-        // if it's a file
-        // generate equivalent path
-        // compare them
-        // get the result
-
-        var ayCarambaResult = AyCaramba(
-            sourcePath: sourcePath,
-            destinationPath: destinationPath
+        var directoryUniqueSongs = GetAllUniqueSongsInDirectoryComparedTo(
+            directoryPath: directoryPath,
+            otherDirectoryPath: otherDirectoryPath
         );
-
-        var deletedSongs = XCE(
-            sourcePath: sourcePath,
-            destinationPath: destinationPath
+        var otherDirectoryUniqueSongs = GetAllUniqueSongsInDirectoryComparedTo(
+            directoryPath: otherDirectoryPath,
+            otherDirectoryPath: directoryPath
+        );
+        var editedSongs = GetAllEditedSongsInDirectoryComparedTo(
+            directoryPath: otherDirectoryPath,
+            otherDirectoryPath: directoryPath
         );
 
         return new CompareSongsResultVm(
-            AddedSongs: ayCarambaResult.AddedSongs,
-            UpdatedSongs: ayCarambaResult.UpdatedSongs,
-            DeletedSongs: deletedSongs
+            AddedSongs: directoryUniqueSongs,
+            EditedSongs: editedSongs,
+            DeletedSongs: otherDirectoryUniqueSongs
         );
     }
 
-    private static AyCarambaResult AyCaramba(string sourcePath, string destinationPath)
+    private static List<string> GetAllUniqueSongsInDirectoryComparedTo(string directoryPath, string otherDirectoryPath)
     {
-        var addedSongs = new List<string>();
-        var updatedSongs = new List<string>();
+        var uniqueSongs = new List<string>();
 
-        var directories = Directory.EnumerateDirectories(sourcePath);
+        var directories = Directory.EnumerateDirectories(directoryPath);
         foreach (var directory in directories)
         {
-            var newSourcePath = sourcePath + "";
-            var newDestinationPath = destinationPath + "";
-            var result = AyCaramba(sourcePath: newSourcePath, destinationPath: newDestinationPath);
-            addedSongs.AddRange(result.AddedSongs);
-            updatedSongs.AddRange(result.UpdatedSongs);
+            var newDirectoryPath = directory + "";
+            var newOtherDirectoryPath = directory + "";
+            var result = GetAllUniqueSongsInDirectoryComparedTo(
+                directoryPath: newDirectoryPath,
+                otherDirectoryPath: newOtherDirectoryPath
+            );
+            uniqueSongs.AddRange(result);
         }
 
-        var files = Directory.EnumerateFiles(sourcePath);
-        foreach (var filePath in files)
+        var files = Directory.EnumerateFiles(directoryPath);
+        foreach (var file in files)
         {
-            var fidPath = "";
+            var equivalentPath = "";
 
-            if (!File.Exists(fidPath))
+            if (!File.Exists(equivalentPath))
             {
-                addedSongs.Add(filePath);
+                uniqueSongs.Add(file);
+            }
+        }
+
+        return uniqueSongs;
+    }
+
+    private static IEnumerable<string> GetAllEditedSongsInDirectoryComparedTo(string directoryPath, string otherDirectoryPath)
+    {
+        var editedSongs = new List<string>();
+
+        var directories = Directory.EnumerateDirectories(directoryPath);
+        foreach (var directory in directories)
+        {
+            var newDirectoryPath = directory + "";
+            var newOtherDirectoryPath = directory + "";
+            var result = GetAllUniqueSongsInDirectoryComparedTo(
+                directoryPath: newDirectoryPath,
+                otherDirectoryPath: newOtherDirectoryPath
+            );
+            editedSongs.AddRange(result);
+        }
+
+        var files = Directory.EnumerateFiles(directoryPath);
+        foreach (var file in files)
+        {
+            var equivalentFilePath = "";
+
+            if (!File.Exists(equivalentFilePath))
+            {
                 continue;
             }
 
             var result = AreSongsEqual(
-                song1Path: filePath,
-                song2Path: fidPath
+                song1Path: file,
+                song2Path: equivalentFilePath
             );
 
             if (result is false)
             {
-                updatedSongs.Add(filePath);
+                editedSongs.Add(file);
             }
         }
 
-        return new AyCarambaResult(
-            AddedSongs: addedSongs,
-            UpdatedSongs: updatedSongs
-        );
-    }
-
-    private static IEnumerable<string> XCE(string sourcePath, string destinationPath)
-    {
-        return [];
+        return editedSongs;
     }
 
     public static bool AreSongsEqual(string song1Path, string song2Path)
