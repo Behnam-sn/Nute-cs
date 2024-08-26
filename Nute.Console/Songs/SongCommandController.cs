@@ -1,5 +1,3 @@
-using Nute.Application.Songs;
-
 namespace Nute.Console.Songs;
 
 internal static class SongCommandController
@@ -42,11 +40,11 @@ internal static class SongCommandController
 
         try
         {
-            var result = SongsManagementService.CompareAllSongs(
-                sourcePath: sourcePath,
-                destinationPath: destinationPath
-            );
-            result.PrintInConsole();
+            //var result = SongsManagementService.CompareAllSongs(
+            //    sourcePath: sourcePath,
+            //    destinationPath: destinationPath
+            //);
+            //result.PrintInConsole();
         }
         catch (Exception exception)
         {
