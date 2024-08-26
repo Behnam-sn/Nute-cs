@@ -4,10 +4,40 @@ namespace Nute.Console.Playlists;
 
 internal static class MultiplePlaylistCommandController
 {
-    private static readonly List<Command> availableCommands =
+    private static readonly List<Command> _commands =
     [
-        new(["Help", "H"], PrintCommands),
-        new(["Get All Not Founded Songs", "GANFS"], GetNotFoundedSongsInAllPlaylists)
+        new(
+            Commands:["Help", "H"],
+            Action: PrintCommands
+        ),
+        new(
+            Commands:["Exit", "E"],
+            Action: () => {}
+        ),
+        new(
+            Commands:["Get All Not Founded Songs", "GANFS"],
+            Action: GetNotFoundedSongsInAllPlaylists
+        ),
+        new(
+            Commands:["Get All Duplicate Songs", "GADS"],
+            Action: GetDuplicateSongsInAllPlaylists
+        ),
+        new(
+            Commands:["Remove All Duplicate Songs", "RADS"],
+            Action: RemoveDuplicateSongsInAllPlaylists
+        ),
+        new(
+            Commands:["Sort All Song", "SAS"],
+            Action: SortSongsInAllPlaylists
+        ),
+        new(
+            Commands:["Change All Songs Base Path", "CASBP"],
+            Action: ChangeSongsBasePathInAllPlaylists
+        ),
+        new(
+            Commands:["Compare Playlists", "CP"],
+            Action: ComparePlaylists
+        )
     ];
 
     internal static void Run()
@@ -15,62 +45,40 @@ internal static class MultiplePlaylistCommandController
         while (true)
         {
             System.Console.Write("Playlist Command: ");
-            var command = System.Console.ReadLine()?.ToLower();
+            var input = System.Console.ReadLine()?.ToLower();
 
-            availableCommands
+            var command = _commands
                 .FirstOrDefault(
                     i => i.Commands.Any(
-                        j => j.Equals(command, StringComparison.CurrentCultureIgnoreCase)
+                        j => j.Equals(input, StringComparison.CurrentCultureIgnoreCase)
                     )
-                )
-                ?.Action();
+                );
 
-            // switch (command)
-            // {
-            //     case "help" or "h":
-            //         PrintCommands();
-            //         break;
+            if (command is null)
+            {
+                continue;
+            }
 
-            //     case "exit" or "e":
-            //         return;
+            if (command.Commands.Contains("Exit"))
+            {
+                return;
+            }
 
-            //     case "get all not founded songs" or "ganfs":
-            //         GetNotFoundedSongsInAllPlaylists();
-            //         break;
-
-            //     case "get all duplicate songs" or "gads":
-            //         GetDuplicateSongsInAllPlaylists();
-            //         break;
-
-            //     case "remove all duplicate songs" or "rads":
-            //         RemoveDuplicateSongsInAllPlaylists();
-            //         break;
-
-            //     case "sort all song" or "sas":
-            //         SortSongsInAllPlaylists();
-            //         break;
-
-            //     case "change all songs base path" or "casbp":
-            //         ChangeSongsBasePathInAllPlaylists();
-            //         break;
-
-            //     case "compare playlists" or "cp":
-            //         ComparePlaylists();
-            //         break;
-            // }
+            command.Action();
         }
     }
 
     private static void PrintCommands()
     {
-        System.Console.WriteLine("help or h");
-        System.Console.WriteLine("exit or e");
-        System.Console.WriteLine("Get All Not Founded Songs or ganfs");
-        System.Console.WriteLine("Get All Duplicate Songs or gads");
-        System.Console.WriteLine("Remove All Duplicate Songs or rads");
-        System.Console.WriteLine("Sort All Song or sas");
-        System.Console.WriteLine("Change All Songs Base Path or casbp");
-        System.Console.WriteLine("Compare Playlists or cp");
+        foreach (var command in _commands)
+        {
+            foreach (var item in command.Commands)
+            {
+                System.Console.Write(item);
+                System.Console.Write(", ");
+            }
+            System.Console.WriteLine("");
+        }
         System.Console.WriteLine("");
     }
 
@@ -95,7 +103,6 @@ internal static class MultiplePlaylistCommandController
             .GetDuplicateSongsInAllPlaylists(sourcePath: sourcePath)
             .PrintInConsole();
     }
-
 
     private static void RemoveDuplicateSongsInAllPlaylists()
     {
