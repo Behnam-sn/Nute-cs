@@ -56,7 +56,14 @@ internal abstract class BaseCommandController
                 return;
             }
 
-            command.Action();
+            try
+            {
+                command.Action();
+            }
+            catch (Exception exception)
+            {
+                System.Console.WriteLine(exception.Message);
+            }
         }
     }
 }
