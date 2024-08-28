@@ -12,12 +12,12 @@ public sealed class Song : IEquatable<Song>, IComparable<Song>
     public uint Year { get; }
     public bool IsSingle { get; }
 
-    public Song(string artist, string album, uint year, uint track)
+    public Song(string path, string artist, string album, string title, uint year, uint track)
     {
-        //Path = path;
+        Path = path;
         Artist = artist;
         Album = album;
-        //Title = title;
+        Title = title;
         Track = track;
         Year = year;
 
@@ -49,54 +49,29 @@ public sealed class Song : IEquatable<Song>, IComparable<Song>
             return 1;
         }
 
-        if (!IsSingle && other.IsSingle)
+        if (Artist != other.Artist)
+        {
+            return Artist.CompareTo(other.Artist);
+        }
+
+        if (Album != other.Album)
+        {
+            return Album.CompareTo(other.Album);
+        }
+
+        if (Track < other.Track)
         {
             return -1;
         }
 
-        if (IsSingle && !other.IsSingle)
+        if (Track > other.Track)
         {
             return 1;
         }
 
-        if (IsSingle && other.IsSingle)
+        if (Title != other.Title)
         {
-            if (Artist != other.Artist)
-            {
-                return Artist.CompareTo(other.Artist);
-            }
-
-            if (Album != other.Album)
-            {
-                return Album.CompareTo(other.Album);
-            }
-
-            return 0;
-        }
-
-        if (!IsSingle && !other.IsSingle)
-        {
-            if (Artist != other.Artist)
-            {
-                return Artist.CompareTo(other.Artist);
-            }
-
-            if (Album != other.Album)
-            {
-                return Album.CompareTo(other.Album);
-            }
-
-            if (Track < other.Track)
-            {
-                return -1;
-            }
-
-            if (Track > other.Track)
-            {
-                return 1;
-            }
-
-            return 0;
+            return Title.CompareTo(other.Title);
         }
 
         return 0;
@@ -116,8 +91,10 @@ public sealed class Song : IEquatable<Song>, IComparable<Song>
 
         var songFile = TagLib.File.Create(path: path);
         return new Song(
+            path: path,
             artist: songFile.Tag.FirstAlbumArtist,
             album: songFile.Tag.Album,
+            title: songFile.Tag.Title,
             year: songFile.Tag.Year,
             track: songFile.Tag.Track
         );
