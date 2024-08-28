@@ -4,9 +4,11 @@ namespace Nute.Console.CommandControllers.Playlists;
 
 internal class MultiplePlaylistCommandController : BaseCommandController
 {
+    protected override string Title { get; } = "Multiple Playlist";
+
     internal MultiplePlaylistCommandController()
     {
-        _commands.AddRange([
+        Commands.AddRange([
             new(
                 Commands: ["Get All Not Founded Songs", "GANFS"],
                 Action: GetNotFoundedSongsInAllPlaylists

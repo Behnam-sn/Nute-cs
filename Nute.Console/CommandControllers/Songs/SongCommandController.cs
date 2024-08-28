@@ -2,9 +2,11 @@ namespace Nute.Console.CommandControllers.Songs;
 
 internal class SongCommandController : BaseCommandController
 {
+    protected override string Title { get; } = "Song";
+
     internal SongCommandController()
     {
-        _commands.AddRange([
+        Commands.AddRange([
             new(
                 Commands: ["Compare Songs", "CS"],
                 Action: CompareSongs

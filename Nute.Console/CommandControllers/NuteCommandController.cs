@@ -5,9 +5,11 @@ namespace Nute.Console.CommandControllers;
 
 internal class NuteCommandController : BaseCommandController
 {
+    protected override string Title { get; } = "Nute";
+
     internal NuteCommandController()
     {
-        _commands.AddRange([
+        Commands.AddRange([
             new(
                 Commands: ["Single Playlist Management", "spm"],
                 Action: SinglePlaylistManagement

@@ -4,9 +4,11 @@ namespace Nute.Console.CommandControllers.Playlists;
 
 internal class SinglePlaylistCommandController : BaseCommandController
 {
+    protected override string Title { get; } = "Single Playlist";
+
     internal SinglePlaylistCommandController()
     {
-        _commands.AddRange([
+        Commands.AddRange([
             new(
                 Commands: ["Get Not Founded Songs", "GNFS"],
                 Action: GetNotFoundedSongsInPlaylist

@@ -2,11 +2,12 @@ namespace Nute.Console.CommandControllers;
 
 internal abstract class BaseCommandController
 {
-    protected readonly List<Command> _commands = [];
+    protected abstract string Title { get; }
+    protected List<Command> Commands { get; } = [];
 
     internal BaseCommandController()
     {
-        _commands.AddRange([
+        Commands.AddRange([
             new(
                 Commands: ["Help", "H"],
                 Action: PrintCommands
@@ -20,7 +21,7 @@ internal abstract class BaseCommandController
 
     private void PrintCommands()
     {
-        foreach (var command in _commands)
+        foreach (var command in Commands)
         {
             foreach (var item in command.Commands)
             {
@@ -36,10 +37,10 @@ internal abstract class BaseCommandController
     {
         while (true)
         {
-            System.Console.Write("Command: ");
+            System.Console.Write($"{Title} Command: ");
             var input = System.Console.ReadLine()?.ToLower();
 
-            var command = _commands
+            var command = Commands
                 .FirstOrDefault(
                     i => i.Commands.Any(
                         j => j.Equals(input, StringComparison.CurrentCultureIgnoreCase)
