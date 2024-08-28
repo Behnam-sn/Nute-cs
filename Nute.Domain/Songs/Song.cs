@@ -21,6 +21,16 @@ public sealed class Song : IEquatable<Song>, IComparable<Song>
         Year = year;
     }
 
+    public override bool Equals(object obj)
+    {
+        return Equals(obj as Song);
+    }
+
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException();
+    }
+
     public bool Equals(Song? other)
     {
         throw new NotImplementedException();
