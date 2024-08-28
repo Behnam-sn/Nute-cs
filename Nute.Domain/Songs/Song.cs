@@ -10,7 +10,6 @@ public sealed class Song : IEquatable<Song>, IComparable<Song>
     public string Title { get; }
     public uint Track { get; }
     public uint Year { get; }
-    public bool IsSingle { get; }
 
     public Song(string path, string artist, string album, string title, uint year, uint track)
     {
@@ -20,11 +19,6 @@ public sealed class Song : IEquatable<Song>, IComparable<Song>
         Title = title;
         Track = track;
         Year = year;
-
-        if (Album.EndsWith("Single"))
-        {
-            IsSingle = true;
-        }
     }
 
     public bool Equals(Song? other)
