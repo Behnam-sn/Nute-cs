@@ -4,7 +4,7 @@ namespace Nute.Console;
 
 internal static class Program
 {
-    private static void Main(string[] args)
+    private static void Main()
     {
         new NuteCommandController().Run();
     }
