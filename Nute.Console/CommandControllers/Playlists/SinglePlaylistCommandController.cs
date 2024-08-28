@@ -1,58 +1,33 @@
 using Nute.Application.Playlists;
 
-namespace Nute.Console.Playlists;
+namespace Nute.Console.CommandControllers.Playlists;
 
-internal static class SinglePlaylistCommandController
+internal class SinglePlaylistCommandController : BaseCommandController
 {
-    internal static void Run()
+    internal SinglePlaylistCommandController()
     {
-        while (true)
-        {
-            System.Console.Write("Playlist Command: ");
-            var command = System.Console.ReadLine()?.ToLower();
-
-            switch (command)
-            {
-                case "help" or "h":
-                    PrintCommands();
-                    break;
-
-                case "exit" or "e":
-                    return;
-
-                case "get not founded songs" or "gnfs":
-                    GetNotFoundedSongsInPlaylist();
-                    break;
-
-                case "get duplicate songs" or "gds":
-                    GetDuplicateSongsInPlaylist();
-                    break;
-
-                case "remove duplicate songs" or "rds":
-                    RemoveDuplicateSongsInPlaylist();
-                    break;
-
-                case "sort songs" or "ss":
-                    SortSongsInPlaylist();
-                    break;
-
-                case "change songs base path" or "csbp":
-                    ChangeSongsBasePathInPlaylist();
-                    break;
-            }
-        }
-    }
-
-    private static void PrintCommands()
-    {
-        System.Console.WriteLine("help or h");
-        System.Console.WriteLine("exit or e");
-        System.Console.WriteLine("Get Not Founded Songs or gnfs");
-        System.Console.WriteLine("Get Duplicate Songs or gds");
-        System.Console.WriteLine("Remove Duplicate Songs or rds");
-        System.Console.WriteLine("Sort Songs or ss");
-        System.Console.WriteLine("Change Songs Base Path or csbp");
-        System.Console.WriteLine("");
+        _commands.AddRange([
+            new(
+                Commands: ["Get Not Founded Songs", "GNFS"],
+                Action: GetNotFoundedSongsInPlaylist
+            ),
+            new(
+                Commands: ["Get Duplicate Songs", "GDS"],
+                Action: GetDuplicateSongsInPlaylist
+            ),
+            new(
+                Commands: ["Remove Duplicate Songs", "RDS"],
+                Action: RemoveDuplicateSongsInPlaylist
+            ),
+            new(
+                Commands: ["Sort Songs", "SS"],
+                Action: SortSongsInPlaylist
+            ),
+            new(
+                Commands: ["Change Songs Base Path", "CSBP"],
+                Action: ChangeSongsBasePathInPlaylist
+            )
+        ]);
     }
 
     private static void GetNotFoundedSongsInPlaylist()

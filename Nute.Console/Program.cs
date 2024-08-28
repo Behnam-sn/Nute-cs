@@ -1,4 +1,6 @@
-﻿namespace Nute.Console;
+﻿using Nute.Console.CommandControllers;
+
+namespace Nute.Console;
 
 internal static class Program
 {
@@ -6,7 +8,7 @@ internal static class Program
     {
         try
         {
-            NuteCommandController.Run();
+            new NuteCommandController().Run();
         }
         catch (Exception exception)
         {

@@ -1,6 +1,6 @@
 ﻿using Nute.Application.Playlists.Vms;
 
-namespace Nute.Console.Playlists;
+namespace Nute.Console.CommandControllers.Playlists;
 
 internal static class VmHelpers
 {
