@@ -10,27 +10,27 @@ internal class MultiplePlaylistCommandController : BaseCommandController
     {
         Commands.AddRange([
             new(
-                Commands: ["Get All Not Founded Songs", "GANFS"],
+                Titles: ["Get All Not Founded Songs", "GANFS"],
                 Action: GetNotFoundedSongsInAllPlaylists
             ),
             new(
-                Commands: ["Get All Duplicate Songs", "GADS"],
+                Titles: ["Get All Duplicate Songs", "GADS"],
                 Action: GetDuplicateSongsInAllPlaylists
             ),
             new(
-                Commands: ["Remove All Duplicate Songs", "RADS"],
+                Titles: ["Remove All Duplicate Songs", "RADS"],
                 Action: RemoveDuplicateSongsInAllPlaylists
             ),
             new(
-                Commands: ["Sort All Song", "SAS"],
+                Titles: ["Sort All Song", "SAS"],
                 Action: SortSongsInAllPlaylists
             ),
             new(
-                Commands: ["Change All Songs Base Path", "CASBP"],
+                Titles: ["Change All Songs Base Path", "CASBP"],
                 Action: ChangeSongsBasePathInAllPlaylists
             ),
             new(
-                Commands: ["Compare Playlists", "CP"],
+                Titles: ["Compare Playlists", "CP"],
                 Action: ComparePlaylists
             )
         ]);

@@ -11,15 +11,15 @@ internal class NuteCommandController : BaseCommandController
     {
         Commands.AddRange([
             new(
-                Commands: ["Single Playlist Management", "spm"],
+                Titles: ["Single Playlist Management", "spm"],
                 Action: SinglePlaylistManagement
             ),
             new(
-                Commands: ["Multiple Playlist Management", "mpm"],
+                Titles: ["Multiple Playlist Management", "mpm"],
                 Action: MultiplePlaylistManagement
             ),
             new(
-                Commands: ["Song", "s"],
+                Titles: ["Song", "s"],
                 Action: SongManagement
             ),
         ]);

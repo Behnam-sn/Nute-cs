@@ -1,3 +1,3 @@
 namespace Nute.Console.CommandControllers;
 
-internal sealed record Command(string[] Commands, Action Action);
+internal sealed record Command(IEnumerable<string> Titles, Action Action);

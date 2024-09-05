@@ -8,7 +8,7 @@ internal class SongCommandController : BaseCommandController
     {
         Commands.AddRange([
             new(
-                Commands: ["Compare Songs", "CS"],
+                Titles: ["Compare Songs", "CS"],
                 Action: CompareSongs
             ),
         ]);

@@ -10,23 +10,23 @@ internal class SinglePlaylistCommandController : BaseCommandController
     {
         Commands.AddRange([
             new(
-                Commands: ["Get Not Founded Songs", "GNFS"],
+                Titles: ["Get Not Founded Songs", "GNFS"],
                 Action: GetNotFoundedSongsInPlaylist
             ),
             new(
-                Commands: ["Get Duplicate Songs", "GDS"],
+                Titles: ["Get Duplicate Songs", "GDS"],
                 Action: GetDuplicateSongsInPlaylist
             ),
             new(
-                Commands: ["Remove Duplicate Songs", "RDS"],
+                Titles: ["Remove Duplicate Songs", "RDS"],
                 Action: RemoveDuplicateSongsInPlaylist
             ),
             new(
-                Commands: ["Sort Songs", "SS"],
+                Titles: ["Sort Songs", "SS"],
                 Action: SortSongsInPlaylist
             ),
             new(
-                Commands: ["Change Songs Base Path", "CSBP"],
+                Titles: ["Change Songs Base Path", "CSBP"],
                 Action: ChangeSongsBasePathInPlaylist
             )
         ]);

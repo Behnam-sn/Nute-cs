@@ -9,11 +9,11 @@ internal abstract class BaseCommandController
     {
         Commands.AddRange([
             new(
-                Commands: ["Help", "H"],
+                Titles: ["Help", "H"],
                 Action: PrintCommands
             ),
             new(
-                Commands: ["Quit", "Q"],
+                Titles: ["Quit", "Q"],
                 Action: () => {}
             )
         ]);
@@ -26,7 +26,7 @@ internal abstract class BaseCommandController
             System.Console.WriteLine(
                 string.Join(
                     separator: ", ",
-                    value: command.Commands
+                    values: command.Titles
                 )
             );
         }
@@ -42,7 +42,7 @@ internal abstract class BaseCommandController
 
             var command = Commands
                 .FirstOrDefault(
-                    i => i.Commands.Any(
+                    i => i.Titles.Any(
                         j => j.Equals(input, StringComparison.CurrentCultureIgnoreCase)
                     )
                 );
@@ -52,7 +52,7 @@ internal abstract class BaseCommandController
                 continue;
             }
 
-            if (command.Commands.Contains("Quit"))
+            if (command.Titles.Contains("Quit"))
             {
                 return;
             }
