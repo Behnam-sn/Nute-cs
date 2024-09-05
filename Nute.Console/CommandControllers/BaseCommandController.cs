@@ -23,12 +23,12 @@ internal abstract class BaseCommandController
     {
         foreach (var command in Commands)
         {
-            foreach (var item in command.Commands)
-            {
-                System.Console.Write(item);
-                System.Console.Write(", ");
-            }
-            System.Console.WriteLine("");
+            System.Console.WriteLine(
+                string.Join(
+                    separator: ", ",
+                    value: command.Commands
+                )
+            );
         }
         System.Console.WriteLine("");
     }
