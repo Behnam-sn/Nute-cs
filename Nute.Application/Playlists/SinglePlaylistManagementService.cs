@@ -48,8 +48,7 @@ public static class SinglePlaylistManagementService
         playlist.Save();
 
         return new SortPlaylistResultVm(
-            PlaylistTitle: playlist.Title,
-            SortedSongs: playlist.Items.Select(i => i.SongPath)
+            PlaylistTitle: playlist.Title
         );
     }
 
