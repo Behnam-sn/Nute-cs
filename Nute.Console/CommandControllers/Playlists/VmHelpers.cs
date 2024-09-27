@@ -6,16 +6,10 @@ internal static class VmHelpers
 {
     internal static void PrintInConsole(this GetNotFoundedSongsInPlaylistResultVm vm)
     {
-        if (vm.NotFoundedSongs.Any())
-        {
-            System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
-            System.Console.WriteLine("Not Founded Songs:");
-            foreach (var song in vm.NotFoundedSongs)
-            {
-                System.Console.WriteLine(song);
-            }
-            System.Console.WriteLine("");
-        }
+        PrintPlaylist(
+            title: vm.PlaylistTitle,
+            songs: vm.NotFoundedSongs
+        );
     }
 
     internal static void PrintInConsole(this IEnumerable<GetNotFoundedSongsInPlaylistResultVm> vms)
@@ -28,16 +22,10 @@ internal static class VmHelpers
 
     internal static void PrintInConsole(this GetDuplicateSongsInPlaylistResultVm vm)
     {
-        if (vm.DuplicateSongs.Any())
-        {
-            System.Console.WriteLine($"Playlist Title: {vm.PlaylistTitle}");
-            System.Console.WriteLine("Duplicate Songs:");
-            foreach (var song in vm.DuplicateSongs)
-            {
-                System.Console.WriteLine(song);
-            }
-            System.Console.WriteLine("");
-        }
+        PrintPlaylist(
+            title: vm.PlaylistTitle,
+            songs: vm.DuplicateSongs
+        );
     }
 
     internal static void PrintInConsole(this IEnumerable<GetDuplicateSongsInPlaylistResultVm> vms)
@@ -50,13 +38,10 @@ internal static class VmHelpers
 
     internal static void PrintInConsole(this RemoveDuplicateSongsInPlaylistResultVm vm)
     {
-        System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
-        System.Console.WriteLine("Duplicate Songs:");
-        foreach (var song in vm.DuplicateSongs)
-        {
-            System.Console.WriteLine(song);
-        }
-        System.Console.WriteLine("");
+        PrintPlaylist(
+            title: vm.PlaylistTitle,
+            songs: vm.RemovedSongs
+        );
     }
 
     internal static void PrintInConsole(this IEnumerable<RemoveDuplicateSongsInPlaylistResultVm> vms)
@@ -124,6 +109,19 @@ internal static class VmHelpers
         foreach (var vm in vms)
         {
             vm.PrintInConsole();
+        }
+    }
+
+    private static void PrintPlaylist(string title, IEnumerable<string> songs)
+    {
+        if (songs.Any())
+        {
+            System.Console.WriteLine($"{title}:");
+            foreach (var song in songs)
+            {
+                System.Console.WriteLine(song);
+            }
+            System.Console.WriteLine("");
         }
     }
 }
