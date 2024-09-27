@@ -37,7 +37,7 @@ public static class SinglePlaylistManagementService
 
         return new RemoveDuplicateSongsInPlaylistResultVm(
             PlaylistTitle: playlist.Title,
-            DuplicateSongs: duplicateSongs.Select(i => i.SongPath)
+            RemovedSongs: duplicateSongs.Select(i => i.SongPath)
         );
     }
 
