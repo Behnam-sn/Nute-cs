@@ -1,4 +1,4 @@
-﻿using Nute.Console.CommandControllers;
+﻿using Nute.Console.ConsoleControllers;
 
 namespace Nute.Console;
 
@@ -6,6 +6,6 @@ internal static class Program
 {
     private static void Main()
     {
-        new NuteCommandController().Run();
+        new MainController().Run();
     }
 }

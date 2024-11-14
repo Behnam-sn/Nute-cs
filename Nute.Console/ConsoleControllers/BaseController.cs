@@ -1,11 +1,13 @@
-namespace Nute.Console.CommandControllers;
+using Nute.Console.Contracts;
 
-internal abstract class BaseCommandController
+namespace Nute.Console.ConsoleControllers;
+
+internal abstract class BaseController
 {
     protected abstract string Title { get; }
     protected List<Command> Commands { get; } = [];
 
-    internal BaseCommandController()
+    internal BaseController()
     {
         Commands.AddRange([
             new(

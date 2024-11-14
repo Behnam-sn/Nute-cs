@@ -1,13 +1,13 @@
-﻿using Nute.Console.CommandControllers.Playlists;
-using Nute.Console.CommandControllers.Songs;
+﻿using Nute.Console.ConsoleControllers.Playlists;
+using Nute.Console.ConsoleControllers.Songs;
 
-namespace Nute.Console.CommandControllers;
+namespace Nute.Console.ConsoleControllers;
 
-internal class NuteCommandController : BaseCommandController
+internal class MainController : BaseController
 {
     protected override string Title { get; } = "Nute";
 
-    internal NuteCommandController()
+    internal MainController()
     {
         Commands.AddRange([
             new(
@@ -27,16 +27,16 @@ internal class NuteCommandController : BaseCommandController
 
     private static void SinglePlaylistManagement()
     {
-        new SinglePlaylistCommandController().Run();
+        new SinglePlaylistController().Run();
     }
 
     private static void MultiplePlaylistManagement()
     {
-        new MultiplePlaylistCommandController().Run();
+        new MultiplePlaylistController().Run();
     }
 
     private static void SongManagement()
     {
-        new SongCommandController().Run();
+        new SongsController().Run();
     }
 }

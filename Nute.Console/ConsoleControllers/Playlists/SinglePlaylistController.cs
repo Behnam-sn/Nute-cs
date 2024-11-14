@@ -1,12 +1,12 @@
 using Nute.Application.Playlists;
 
-namespace Nute.Console.CommandControllers.Playlists;
+namespace Nute.Console.ConsoleControllers.Playlists;
 
-internal class SinglePlaylistCommandController : BaseCommandController
+internal class SinglePlaylistController : BaseController
 {
     protected override string Title { get; } = "Single Playlist";
 
-    internal SinglePlaylistCommandController()
+    internal SinglePlaylistController()
     {
         Commands.AddRange([
             new(

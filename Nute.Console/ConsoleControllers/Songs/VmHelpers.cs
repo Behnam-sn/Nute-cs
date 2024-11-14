@@ -1,6 +1,6 @@
 ﻿using Nute.Application.Songs.Vms;
 
-namespace Nute.Console.CommandControllers.Songs;
+namespace Nute.Console.ConsoleControllers.Songs;
 
 internal static class VmHelpers
 {

@@ -1,10 +1,10 @@
-namespace Nute.Console.CommandControllers.Songs;
+namespace Nute.Console.ConsoleControllers.Songs;
 
-internal class SongCommandController : BaseCommandController
+internal class SongsController : BaseController
 {
     protected override string Title { get; } = "Song";
 
-    internal SongCommandController()
+    internal SongsController()
     {
         Commands.AddRange([
             new(
