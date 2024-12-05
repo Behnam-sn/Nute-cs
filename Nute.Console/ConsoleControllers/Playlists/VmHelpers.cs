@@ -101,7 +101,7 @@ internal static class VmHelpers
 
     internal static void PrintInConsole(this UpdateSongsPathResultVm vm)
     {
-        System.Console.WriteLine($"Title: {vm.PlaylistTitle}");
+        System.Console.WriteLine(vm.PlaylistTitle);
     }
 
     internal static void PrintInConsole(this IEnumerable<UpdateSongsPathResultVm> vms)
