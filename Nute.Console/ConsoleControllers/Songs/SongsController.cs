@@ -1,16 +1,16 @@
+using Nute.Application.Songs;
+
 namespace Nute.Console.ConsoleControllers.Songs;
 
 internal class SongsController : BaseController
 {
-    protected override string Title { get; } = "Song";
+    protected override string Title { get; } = "Songs";
 
     internal SongsController()
     {
         Commands.AddRange([
-            new(
-                Titles: ["Compare Songs", "CS"],
-                Action: CompareSongs
-            ),
+            new(Titles: ["Compare Songs", "CS"], Action: CompareSongs),
+            new(Titles: ["Organize Songs By Album", "OSBA"], Action: OrganizeSongsByAlbum),
         ]);
     }
 
@@ -31,5 +31,13 @@ internal class SongsController : BaseController
         // {
         //     System.Console.WriteLine(exception);
         // }
+    }
+
+    private static void OrganizeSongsByAlbum()
+    {
+        System.Console.Write("Path: ");
+        var path = System.Console.ReadLine();
+
+        SongsManagementService.OrganizeSongsByAlbum(path);
     }
 }

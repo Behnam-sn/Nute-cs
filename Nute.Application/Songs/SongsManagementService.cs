@@ -6,6 +6,14 @@ namespace Nute.Application.Songs;
 
 public static class SongsManagementService
 {
+    private static void ValidateSourcePath(string sourcePath)
+    {
+        if (!Directory.Exists(sourcePath))
+        {
+            throw new DirectoryNotFoundException($"{sourcePath} doesn't exists.");
+        }
+    }
+
     public static CompareSongsResultVm CompareAllSongs(string directoryPath, string otherDirectoryPath)
     {
         var directoryUniqueSongs = GetAllUniqueSongsInDirectoryComparedTo(
@@ -118,5 +126,33 @@ public static class SongsManagementService
 
     public static void SyncSongs()
     {
+    }
+
+    public static void OrganizeSongsByAlbum(string path)
+    {
+        ValidateSourcePath(path);
+
+        var files = Directory.EnumerateFiles(path);
+        foreach (var file in files)
+        {
+            try
+            {
+                var song = Song.Parse(path: file);
+                var album = song.Album;
+
+                var parentDirectory = Path.Combine(path, album);
+                if (!Directory.Exists(parentDirectory))
+                {
+                    Directory.CreateDirectory(parentDirectory);
+                }
+
+                var newFilePath = Path.Combine(parentDirectory, file);
+                File.Move(file, newFilePath);
+
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }
