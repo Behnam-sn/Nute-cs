@@ -128,31 +128,37 @@ public static class SongsManagementService
     {
     }
 
-    public static void OrganizeSongsByAlbum(string path)
+    public static IEnumerable<OrganizeSongsByAlbumResponse> OrganizeSongsByAlbum(string path)
     {
         ValidateSourcePath(path);
 
+        var results = new List<OrganizeSongsByAlbumResponse>();
         var files = Directory.EnumerateFiles(path);
+
         foreach (var file in files)
         {
             try
             {
                 var song = Song.Parse(path: file);
-                var album = song.Album;
 
-                var parentDirectory = Path.Combine(path, album);
+                var parentName = $"{song.Artist} - {song.Album}";
+                var parentDirectory = Path.Combine(path, parentName);
                 if (!Directory.Exists(parentDirectory))
                 {
                     Directory.CreateDirectory(parentDirectory);
                 }
 
-                var newFilePath = Path.Combine(parentDirectory, file);
+                var fileName = Path.GetFileName(file);
+                var newFilePath = Path.Combine(parentDirectory, fileName);
                 File.Move(file, newFilePath);
 
+                results.Add(new(parentName));
             }
             catch (Exception)
             {
             }
         }
+
+        return results;
     }
 }

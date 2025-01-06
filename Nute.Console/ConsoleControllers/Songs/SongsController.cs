@@ -38,6 +38,10 @@ internal class SongsController : BaseController
         System.Console.Write("Path: ");
         var path = System.Console.ReadLine();
 
-        SongsManagementService.OrganizeSongsByAlbum(path);
+        var result = SongsManagementService.OrganizeSongsByAlbum(path);
+        foreach (var item in result)
+        {
+            item.PrintInConsole();
+        }
     }
 }
