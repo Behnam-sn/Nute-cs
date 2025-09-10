@@ -25,6 +25,7 @@ internal abstract class BaseController
     {
         foreach (var command in Commands)
         {
+            System.Console.Write("- ");
             System.Console.WriteLine(
                 string.Join(
                     separator: ", ",
