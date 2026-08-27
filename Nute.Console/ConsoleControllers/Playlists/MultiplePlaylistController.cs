@@ -89,7 +89,7 @@ internal class MultiplePlaylistController : BaseController
         var currentBasePathType = "Windows";
         var newBasePath = "/storage/emulated/0";
         var newBasePathType = "Linux";
-        var destinationDirectoryPath = "D:\\Musics\\Playlist Converted";
+        var destinationDirectoryPath = "D:\\Music\\Playlist Converted";
 
         MultiplePlaylistManagementService
             .ChangeSongsBasePathInAllPlaylists(
